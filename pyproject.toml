@@ -1,0 +1,46 @@
+[tool.mypy]
+check_untyped_defs = true
+plugins="pydantic.mypy"
+
+[[tool.mypy.overrides]]
+# Project settings
+module = [
+    "hello.*",
+]
+disallow_any_generics = true
+disallow_untyped_defs = true
+
+[[tool.mypy.overrides]]
+# Dependency settings
+module = [
+    "pytest.*"
+]
+ignore_missing_imports = true
+
+[tool.ruff]
+select = [
+    "F", # Pyflakes: Focusses on errors
+    "E", "W", # pycodestyle: Focusses on uniform coding style
+    "UP", # pyupgrade: Ensures that we're using the newest python coding style
+    "I", # isort: Manages import ordering for us
+    "SIM", # flake8-simplify: (automatic) simplifications for code
+    "RET", # flake8-return: Check return values in code
+    "C4", # flake8-comprehensions: (auto) use comprehensions when possible
+]
+
+# Allow autofix for all enabled rules (when `--fix`) is provided.
+fixable = ["ALL"]
+
+# Sets the style to be python 3.10
+target-version = "py310"
+
+[tool.ruff.isort]
+split-on-trailing-comma = false # whenever imports fit on a single line, isort will attempt to do so
+known-first-party = ["imports"] # the `imports` directory only exists after `cdk8s import`, so we'll manually mark it here
+
+
+[tool.pylint.'MESSAGES CONTROL']
+disable= [
+    "missing-docstring",       # Functions should do one thing, so a descriptive title should be enough
+    "trailing-newlines",       # caused by black in __init__ files
+]
