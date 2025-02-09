@@ -99,6 +99,9 @@ def add_results_to_ranking(
             "points": f"{tournament_name}_points",
         }
     )
+    tournament_results[f"{tournament_name}_points"] = (
+        tournament_results[f"{tournament_name}_points"].round().astype(int)
+    )
     if ranking.empty:
         ranking = tournament_results[
             ["name", f"{tournament_name}_rank", f"{tournament_name}_points"]
@@ -117,36 +120,43 @@ def add_results_to_ranking(
 
 def update_current_standings(ranking: pd.DataFrame) -> pd.DataFrame:
     points_columns = [col for col in ranking.columns if col.endswith("_points")]
-    ranking["points"] = ranking[points_columns].apply(
-        lambda row: row.nlargest(3).sum(), axis=1
+    ranking["points"] = (
+        ranking[points_columns]
+        .apply(lambda row: row.nlargest(3).sum(), axis=1)
+        .round()
+        .astype(int)
     )
     ranking["rank"] = ranking["points"].rank(method="min", ascending=False).astype(int)
     return ranking
 
 
 def calculate_ranking():
-    ranking = pd.DataFrame(columns=["name"])
     tournament_files = sorted(glob.glob((DATA_DIRECTORY / "*.csv").as_posix()))
+    categories = ["advanced", "intermediate", "beginner", "women"]
 
-    # Add points for each tournament
-    for tournament_file in tournament_files:
-        tournament_results = pd.read_csv(tournament_file)
-        # Temporarily only take advanced into consideration
-        tournament_results = tournament_results[
-            tournament_results["category"] == "advanced"
+    # Calculate ranking for each category
+    for category in categories:
+        ranking = pd.DataFrame(columns=["name"])
+        for tournament_file in tournament_files:
+            tournament_results = pd.read_csv(tournament_file)
+            tournament_results = tournament_results[
+                tournament_results["category"] == category
+            ]
+            if not tournament_results.empty:
+                tournament_results["points"] = calculate_points(
+                    tournament_results, ranking
+                )
+                ranking = add_results_to_ranking(
+                    Path(tournament_file).stem, tournament_results, ranking
+                )
+                ranking = update_current_standings(ranking)
+
+        ranking.sort_values(by="points", ascending=False, inplace=True)
+        columns_order = ["name", "rank", "points"] + [
+            col for col in ranking.columns if col not in ["name", "rank", "points"]
         ]
-        tournament_results["points"] = calculate_points(tournament_results, ranking)
-        ranking = add_results_to_ranking(
-            Path(tournament_file).stem, tournament_results, ranking
-        )
-        ranking = update_current_standings(ranking)
-
-    ranking.sort_values(by="points", ascending=False, inplace=True)
-    columns_order = ["name", "rank", "points"] + [
-        col for col in ranking.columns if col not in ["name", "rank", "points"]
-    ]
-    ranking = ranking[columns_order]
-    ranking.to_csv("rankings.csv", index=False)
+        ranking = ranking[columns_order]
+        ranking.to_csv(f"{category}_ranking.csv", index=False)
 
 
 if __name__ == "__main__":
