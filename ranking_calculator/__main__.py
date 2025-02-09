@@ -131,6 +131,10 @@ def calculate_ranking():
     # Add points for each tournament
     for tournament_file in tournament_files:
         tournament_results = pd.read_csv(tournament_file)
+        # Temporarily only take advanced into consideration
+        tournament_results = tournament_results[
+            tournament_results["category"] == "advanced"
+        ]
         tournament_results["points"] = calculate_points(tournament_results, ranking)
         ranking = add_results_to_ranking(
             Path(tournament_file).stem, tournament_results, ranking
