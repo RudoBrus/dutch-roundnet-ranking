@@ -1,4 +1,5 @@
 import glob
+from datetime import datetime
 from pathlib import Path
 
 import pandas as pd
@@ -72,6 +73,20 @@ POINTS_MAPPING = {
 }
 
 
+def get_age_multiplier(tournament_date: str) -> float:
+    tournament_date = datetime.strptime(tournament_date, "%Y-%m-%d")
+    age_in_months = (datetime.now() - tournament_date).days // 30
+    if age_in_months > 24:
+        return 0.0
+    if age_in_months > 18:
+        return 0.4
+    if age_in_months > 12:
+        return 0.6
+    if age_in_months > 6:
+        return 0.8
+    return 1.0
+
+
 def calculate_points(
     tournament_results: pd.DataFrame, ranking: pd.DataFrame
 ) -> pd.Series:
@@ -120,8 +135,13 @@ def add_results_to_ranking(
 
 def update_current_standings(ranking: pd.DataFrame) -> pd.DataFrame:
     points_columns = [col for col in ranking.columns if col.endswith("_points")]
+    for col in points_columns:
+        tournament_date = col.split("_")[0]
+        age_multiplier = get_age_multiplier(tournament_date)
+        ranking[f"{col}_current"] = ranking[col] * age_multiplier
+
     ranking["points"] = (
-        ranking[points_columns]
+        ranking[[f"{col}_current" for col in points_columns]]
         .apply(lambda row: row.nlargest(3).sum(), axis=1)
         .round()
         .astype(int)
@@ -143,6 +163,7 @@ def calculate_ranking():
                 tournament_results["category"] == category
             ]
             if not tournament_results.empty:
+                ranking = update_current_standings(ranking)
                 tournament_results["points"] = calculate_points(
                     tournament_results, ranking
                 )
