@@ -1,39 +1,39 @@
 name,rank,points,2023-09-02_NK_rank,2023-09-02_NK_points,2023-09-02_NK_points_current,2024-06-29_NK_rank,2024-06-29_NK_points,2024-06-29_NK_points_current
-Nikola Gersanov,1,800,,,,1.0,1000.0,800.0
-Klemen Peganc,1,800,,,,1.0,1000.0,800.0
-Luc van Iperen,3,720,,,,2.0,900.0,720.0
-Koen Franken ,3,720,,,,2.0,900.0,720.0
-Julian Baks,5,640,,,,3.0,800.0,640.0
-Jurriën van Marle,5,640,,,,3.0,800.0,640.0
-Quinten van Duin,7,600,1.0,1000.0,600.0,,,
-Niels van Weerdenburg,7,600,1.0,1000.0,600.0,,,
-Steven Biemans,9,560,,,,4.0,700.0,560.0
-Jary Koijman ,9,560,,,,4.0,700.0,560.0
-Tim de Goede,11,540,2.0,900.0,540.0,,,
-Maikel Tuit,11,540,2.0,900.0,540.0,,,
-Kevin Focke,13,480,3.0,800.0,480.0,,,
-Steven biemans,13,480,3.0,800.0,480.0,,,
-Ricardo Brouwer,15,420,4.0,700.0,420.0,,,
-Arjen Poulie,15,420,4.0,700.0,420.0,,,
-Daphne Lardinois,17,400,,,,6.0,500.0,400.0
-David Hielkema,17,400,,,,5.0,500.0,400.0
-Sjef Holl,17,400,,,,6.0,500.0,400.0
-Rogier Edelschaap,17,400,,,,5.0,500.0,400.0
-Gijs van Gerwen,21,320,,,,8.0,400.0,320.0
-Magali de Rooy,21,320,,,,7.0,400.0,320.0
-Jeroen Vriens,21,320,,,,7.0,400.0,320.0
-Janna Jansma,21,320,,,,8.0,400.0,320.0
-Rianne Voerman,25,300,5.0,500.0,300.0,,,
-Riccardo Minelli,25,300,6.0,500.0,300.0,,,
-fabio groen,25,300,6.0,500.0,300.0,,,
-Jary Kooijman,25,300,5.0,500.0,300.0,,,
-Joris Piree,29,240,,,,11.0,300.0,240.0
-Rafael Nierse,29,240,7.0,400.0,240.0,,,
-Hannes Holl,29,240,7.0,400.0,240.0,,,
-Marieke Goode,29,240,,,,9.0,300.0,240.0
-Stan van Bentum,29,240,,,,10.0,300.0,240.0
-Bas Ramaekers,29,240,,,,11.0,300.0,240.0
-Lech Backhuizen,29,240,,,,9.0,300.0,240.0
-Bo Zonneveld,29,240,8.0,400.0,240.0,,,
-Wim Verschuren,29,240,8.0,400.0,240.0,,,
-Jurre Buiting,29,240,,,,10.0,300.0,240.0
+Nikola Gersanov,1,1000,,,,1.0,1000.0,1000.0
+Klemen Peganc,1,1000,,,,1.0,1000.0,1000.0
+Luc van Iperen,3,900,,,,2.0,900.0,900.0
+Koen Franken ,3,900,,,,2.0,900.0,900.0
+Quinten van Duin,5,800,1.0,1000.0,800.0,,,
+Niels van Weerdenburg,5,800,1.0,1000.0,800.0,,,
+Julian Baks,5,800,,,,3.0,800.0,800.0
+Jurriën van Marle,5,800,,,,3.0,800.0,800.0
+Tim de Goede,9,720,2.0,900.0,720.0,,,
+Maikel Tuit,9,720,2.0,900.0,720.0,,,
+Steven Biemans,11,700,,,,4.0,700.0,700.0
+Jary Koijman ,11,700,,,,4.0,700.0,700.0
+Kevin Focke,13,640,3.0,800.0,640.0,,,
+Steven biemans,13,640,3.0,800.0,640.0,,,
+Ricardo Brouwer,15,560,4.0,700.0,560.0,,,
+Arjen Poulie,15,560,4.0,700.0,560.0,,,
+Daphne Lardinois,17,500,,,,6.0,500.0,500.0
+David Hielkema,17,500,,,,5.0,500.0,500.0
+Sjef Holl,17,500,,,,6.0,500.0,500.0
+Rogier Edelschaap,17,500,,,,5.0,500.0,500.0
+Rianne Voerman,21,400,5.0,500.0,400.0,,,
+Janna Jansma,21,400,,,,8.0,400.0,400.0
+Riccardo Minelli,21,400,6.0,500.0,400.0,,,
+Gijs van Gerwen,21,400,,,,8.0,400.0,400.0
+fabio groen,21,400,6.0,500.0,400.0,,,
+Jary Kooijman,21,400,5.0,500.0,400.0,,,
+Jeroen Vriens,21,400,,,,7.0,400.0,400.0
+Magali de Rooy,21,400,,,,7.0,400.0,400.0
+Hannes Holl,29,320,7.0,400.0,320.0,,,
+Rafael Nierse,29,320,7.0,400.0,320.0,,,
+Bo Zonneveld,29,320,8.0,400.0,320.0,,,
+Wim Verschuren,29,320,8.0,400.0,320.0,,,
+Joris Piree,33,300,,,,11.0,300.0,300.0
+Marieke Goode,33,300,,,,9.0,300.0,300.0
+Stan van Bentum,33,300,,,,10.0,300.0,300.0
+Bas Ramaekers,33,300,,,,11.0,300.0,300.0
+Lech Backhuizen,33,300,,,,9.0,300.0,300.0
+Jurre Buiting,33,300,,,,10.0,300.0,300.0
