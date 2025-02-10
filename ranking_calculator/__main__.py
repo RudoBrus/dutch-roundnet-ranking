@@ -2,6 +2,7 @@ import glob
 from datetime import datetime
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 
 from ranking_calculator.settings import (
@@ -13,19 +14,10 @@ from ranking_calculator.settings import (
 DATA_DIRECTORY = Path(__file__).parent / "tournament_data"
 
 
-def get_age_multiplier(tournament_date: str) -> float:
-    tournament_date = datetime.strptime(tournament_date, "%Y-%m-%d")
-    age_in_months = (datetime.now() - tournament_date).days // 30
-    for threshold, age_multiplier in AGE_MULTIPLIERS.items():
-        if age_in_months <= threshold:
-            return age_multiplier
-    return 1.0
-
-
 def calculate_points(
     tournament_results: pd.DataFrame, ranking: pd.DataFrame
 ) -> pd.Series:
-    multiplier = 1
+    multiplier = 1.0
     for player in tournament_results["name"]:
         rank_row = ranking[ranking["name"] == player]
         if not rank_row.empty:
@@ -46,9 +38,9 @@ def add_results_to_ranking(
             "points": f"{tournament_name}_points",
         }
     )
-    tournament_results[f"{tournament_name}_points"] = (
-        tournament_results[f"{tournament_name}_points"].round().astype(int)
-    )
+    tournament_results[f"{tournament_name}_points"] = tournament_results[
+        f"{tournament_name}_points"
+    ]
     if ranking.empty:
         ranking = tournament_results[
             ["name", f"{tournament_name}_rank", f"{tournament_name}_points"]
@@ -65,6 +57,15 @@ def add_results_to_ranking(
     return ranking
 
 
+def get_age_multiplier(tournament_date: str) -> float:
+    tournament_date = datetime.strptime(tournament_date, "%Y-%m-%d")
+    age_in_months = (datetime.now() - tournament_date).days // 30
+    for threshold, age_multiplier in AGE_MULTIPLIERS.items():
+        if age_in_months <= threshold:
+            return age_multiplier
+        ValueError(f"Age multiplier not found for {age_in_months} months")
+
+
 def update_current_standings(ranking: pd.DataFrame) -> pd.DataFrame:
     points_columns = [col for col in ranking.columns if col.endswith("_points")]
     for col in points_columns:
@@ -72,13 +73,15 @@ def update_current_standings(ranking: pd.DataFrame) -> pd.DataFrame:
         age_multiplier = get_age_multiplier(tournament_date)
         ranking[f"{col}_current"] = ranking[col] * age_multiplier
 
-    ranking["points"] = (
-        ranking[[f"{col}_current" for col in points_columns]]
-        .apply(lambda row: row.nlargest(3).sum(), axis=1)
-        .round()
-        .astype(int)
+    top_results = ranking[[f"{col}_current" for col in points_columns]].apply(
+        lambda row: row.nlargest(3).values, axis=1
     )
-    ranking["rank"] = ranking["points"].rank(method="min", ascending=False).astype(int)
+    ranking["Best result 1"] = top_results.apply(lambda x: x[0] if len(x) > 0 else 0)
+    ranking["Best result 2"] = top_results.apply(lambda x: x[1] if len(x) > 1 else 0)
+    ranking["Best result 3"] = top_results.apply(lambda x: x[2] if len(x) > 2 else 0)
+    ranking["points"] = top_results.apply(lambda x: np.nansum(x))
+
+    ranking["rank"] = ranking["points"].rank(method="min", ascending=False)
     return ranking
 
 
@@ -95,6 +98,7 @@ def calculate_ranking():
                 tournament_results["category"] == category
             ]
             if not tournament_results.empty:
+                # First update the standings based on the time of the now played tournament
                 ranking = update_current_standings(ranking)
                 tournament_results["points"] = calculate_points(
                     tournament_results, ranking
@@ -102,14 +106,25 @@ def calculate_ranking():
                 ranking = add_results_to_ranking(
                     Path(tournament_file).stem, tournament_results, ranking
                 )
+                # Update the standings with the newly added points
                 ranking = update_current_standings(ranking)
 
         ranking.sort_values(by="points", ascending=False, inplace=True)
-        columns_order = ["name", "rank", "points"] + [
-            col for col in ranking.columns if col not in ["name", "rank", "points"]
+        first_columns = [
+            "name",
+            "rank",
+            "points",
+            "Best result 1",
+            "Best result 2",
+            "Best result 3",
+        ]
+        columns_order = first_columns + [
+            col for col in ranking.columns if col not in first_columns
         ]
         ranking = ranking[columns_order]
-        ranking.to_csv(f"../rankings/{category}_ranking.csv", index=False)
+        ranking.to_csv(
+            f"../rankings/{category}_ranking.csv", float_format="%.0f", index=False
+        )
 
 
 if __name__ == "__main__":
