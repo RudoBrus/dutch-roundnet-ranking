@@ -156,7 +156,7 @@ def calculate_ranking():
             col for col in ranking.columns if col not in ["name", "rank", "points"]
         ]
         ranking = ranking[columns_order]
-        ranking.to_csv(f"{category}_ranking.csv", index=False)
+        ranking.to_csv(f"../rankings/{category}_ranking.csv", index=False)
 
 
 if __name__ == "__main__":
