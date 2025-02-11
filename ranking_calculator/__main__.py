@@ -4,13 +4,7 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
-
-from ranking_calculator.settings import (
-#from settings import (
-    AGE_MULTIPLIERS,
-    PLAYER_MULTIPLIERS,
-    POINTS_MAPPING,
-)
+from settings import AGE_MULTIPLIERS, PLAYER_MULTIPLIERS, POINTS_MAPPING
 
 DATA_DIRECTORY = Path(__file__).parent / "tournament_data"
 
@@ -58,12 +52,7 @@ def add_results_to_ranking(
     return ranking
 
 
-def get_age_multiplier(tournament_date: str, calculation_date: [str] = None) -> float:
-    if calculation_date is None:
-        calculation_date = datetime.now()
-    else:
-        calculation_date = datetime.strptime(calculation_date, "%Y-%m-%d")
-
+def get_age_multiplier(tournament_date: str, calculation_date: datetime) -> float:
     tournament_date = datetime.strptime(tournament_date, "%Y-%m-%d")
     age_in_months = (calculation_date - tournament_date).days // 30
     for threshold, age_multiplier in AGE_MULTIPLIERS.items():
@@ -72,11 +61,9 @@ def get_age_multiplier(tournament_date: str, calculation_date: [str] = None) -> 
         ValueError(f"Age multiplier not found for {age_in_months} months")
 
 
-def update_current_standings(ranking: pd.DataFrame, calculation_date: [str] = None) -> pd.DataFrame:
-    if calculation_date is None:
-        calculation_date = datetime.now().strftime("%Y-%m-%d")
-    
-
+def update_current_standings(
+    ranking: pd.DataFrame, calculation_date: datetime
+) -> pd.DataFrame:
     points_columns = [col for col in ranking.columns if col.endswith("_points")]
     for col in points_columns:
         tournament_date = col.split("_")[0]
@@ -95,12 +82,7 @@ def update_current_standings(ranking: pd.DataFrame, calculation_date: [str] = No
     return ranking
 
 
-def calculate_ranking(calculation_date = None):
-    if calculation_date is None:
-        calculation_date = datetime.now()
-    else:
-        calculation_date = datetime.strptime(calculation_date, "%Y-%m-%d")
-
+def calculate_ranking(calculation_date: datetime = datetime.now()):
     tournament_files = sorted(glob.glob((DATA_DIRECTORY / "*.csv").as_posix()))
     categories = ["advanced", "intermediate", "beginner", "women"]
 
@@ -108,15 +90,17 @@ def calculate_ranking(calculation_date = None):
     for category in categories:
         ranking = pd.DataFrame(columns=["name"])
         for tournament_file in tournament_files:
-            tournament_date = datetime.strptime(Path(tournament_file).stem.split("_")[0], "%Y-%m-%d")
-            if tournament_date < calculation_date:
+            tournament_date = datetime.strptime(
+                Path(tournament_file).stem.split("_")[0], "%Y-%m-%d"
+            )
+            if tournament_date <= calculation_date:
                 tournament_results = pd.read_csv(tournament_file)
                 tournament_results = tournament_results[
                     tournament_results["category"] == category
                 ]
                 if not tournament_results.empty:
                     # First update the standings based on the time of the now played tournament
-                    ranking = update_current_standings(ranking, calculation_date.strftime("%Y-%m-%d"))
+                    ranking = update_current_standings(ranking, calculation_date)
                     tournament_results["points"] = calculate_points(
                         tournament_results, ranking
                     )
@@ -124,8 +108,7 @@ def calculate_ranking(calculation_date = None):
                         Path(tournament_file).stem, tournament_results, ranking
                     )
                     # Update the standings with the newly added points
-                    ranking = update_current_standings(ranking, calculation_date.strftime("%Y-%m-%d"))
-                
+                    ranking = update_current_standings(ranking, calculation_date)
 
         ranking.sort_values(by="points", ascending=False, inplace=True)
         first_columns = [
@@ -141,10 +124,11 @@ def calculate_ranking(calculation_date = None):
         ]
         ranking = ranking[columns_order]
         ranking.to_csv(
-            f"../rankings/{category}_ranking_{calculation_date.strftime("%Y-%m-%d")}.csv", float_format="%.0f", index=False
+            f"../rankings/{category}_ranking_{calculation_date.strftime('%Y-%m-%d')}.csv",
+            float_format="%.0f",
+            index=False,
         )
 
 
 if __name__ == "__main__":
-    #calculate_ranking("2025-02-11")
-    calculate_ranking()
+    calculate_ranking(datetime(2024, 2, 11))

@@ -21,3 +21,5 @@ Elk team sowieso wat multiplier? Hoeveel multiplier uberhaupt?
 ## Namen in de csv bestanden automatisch wat cleanen
 
 Hoofdletters niet bekijken.
+
+## Update age multiplier vanuit wanneer toernooi is gespeeld
