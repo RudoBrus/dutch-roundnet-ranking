@@ -105,8 +105,8 @@ def find_divisions(driver, waittime=20):
 
 
 def select_division(division_name):
-    if "women" in division_name.lower():
-        return "womens"
+    if "womens" in division_name.lower():
+        return "women"
     if "advanced" in division_name.lower():
         return "advanced"
     if "intermediate" in division_name.lower():
