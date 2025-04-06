@@ -124,11 +124,11 @@ def calculate_ranking(calculation_date: datetime = datetime.now()):
         ]
         ranking = ranking[columns_order]
         ranking.to_csv(
-            f"../rankings/{category}_ranking_{calculation_date.strftime('%Y-%m-%d')}.csv",
+            f"dutch-roundnet-ranking/rankings/{category}_ranking_{calculation_date.strftime('%Y-%m-%d')}.csv",
             float_format="%.0f",
             index=False,
         )
 
 
 if __name__ == "__main__":
-    calculate_ranking(datetime(2024, 2, 11))
+    calculate_ranking(datetime(2025, 3, 11))
