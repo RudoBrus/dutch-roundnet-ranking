@@ -1,9 +1,13 @@
 import pandas as pd
 import numpy as np
 
+from datetime import datetime
+from pathlib import Path
+
 class RNLTournament:
-    def __init__(self, tournament_key : str, tournament_data:pd.DataFrame):
+    def __init__(self, tournament_key : str, tournament_date: datetime.date, tournament_data:pd.DataFrame):
         self.tournament_key = tournament_key
+        self.tournament_date = tournament_date
         self.tournament_data = tournament_data
 
         # test function, and potentially do a lot of validation beforehand, so I do not need to do a lot of checks here.
@@ -37,4 +41,12 @@ class RNLTournament:
 
     def get_multipliers(self):
         return self.level_multiplier, self.player_multiplier
+    
+    @staticmethod
+    def build_tournament_key(filename : str):
+        file_strings = Path(filename).stem.split("_")
+        key = datetime.strptime(
+                file_strings[0], "%Y-%m-%d"
+            ).strftime("%y%m%d") + file_strings[1][0]
+        return key
 
