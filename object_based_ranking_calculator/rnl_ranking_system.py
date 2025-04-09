@@ -6,27 +6,38 @@ from pathlib import Path
 
 from rnl_tournament import RNLTournament
 from rnl_player import RNLPlayer
-
+from rnl_tournament_mgr import RNLTournamentMgr
+from rnl_player_mgr import RNLPlayerMgr
 PLAYER_DB = r"../ranking_db/players.db"
 TOURNAMENT_RECORDS_FOLDER = r"../ranking_calculator/tournament_data"
 
 
 class RNLRankingSystem:
-    def __init__(self, name : str, start_date : datetime.date, baseranking : pd.DataFrame = None):
+    """
+    Represents a ranking system in the RNL ranking system.
+    todo:
+
+    """
+    def __init__(self, name : str, start_date : datetime.date):
+        # first check if a ranking system with this name exists
+        if Path(f"../rankings/{name}").exists():
+            raise ValueError(f"Ranking system with name {name} already exists")
+
         self.name = name
         self.version = 0.1
 
-        self.rankingbook : dict[pd.DataFrame] = {}
-        self.tournamentbook : dict[datetime.date] = {}
-        self.tournaments : dict[RNLTournament] = {}
+        self.rankingbook : dict[datetime.date, pd.DataFrame] = {}   
 
-        self.player_ids = []
-        self.players = set()
+        self.current_date : datetime.date = start_date
 
-        self.add_base_ranking(baseranking=baseranking)
+        # lets start building the setup
+        self.current_ranking = pd.DataFrame(columns=["player_id", "player_name", "player_rating", "player_ranking_composition"])
+        # lets make a folder for this specific ranking system
+        self.ranking_folder = Path(f"../rankings/{self.name}")
+        self.ranking_folder.mkdir(parents=True, exist_ok=True)
 
-        self.current_date = start_date
-        self.current_ranking = pd.DataFrame(columns=["player_id", "player_name", "player_rating"])
+        self.player_mgr = RNLPlayerMgr(self.ranking_folder)
+        self.tournament_mgr = RNLTournamentMgr(self.ranking_folder) 
 
     @staticmethod
     def load_ranking(self, name: str):
@@ -41,17 +52,7 @@ class RNLRankingSystem:
 
         # all in subfolder rankings/self.name
         pass
-
-    def add_base_ranking(self, baseranking : pd.DataFrame = None):
-        # temp not operational solution
-        if baseranking:
-            self.rankingbook["base"] = baseranking
-            self.tournamentbook["base"] = start_date - 1
-            
-            for player in baseranking["player_id"]:
-                self.player_ids.append(player)
-        pass
-    
+  
     def load_tournament_from_file(self, filename):
         # first check the tournament db
         tournament_date = datetime.strptime(

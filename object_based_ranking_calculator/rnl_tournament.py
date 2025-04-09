@@ -1,23 +1,31 @@
 import pandas as pd
 import numpy as np
-
+import json
 from datetime import datetime
 from pathlib import Path
 
+RULES = json.load(open("rules.json"))
+
 class RNLTournament:
-    def __init__(self, tournament_key : str, tournament_date: datetime.date, tournament_data:pd.DataFrame):
+    def __init__(self, tournament_name : str, tournament_key : str, tournament_date: datetime.date, tournament_data:pd.DataFrame, playerbook : dict[str, str]):
+        self.tournament_name = tournament_name
         self.tournament_key = tournament_key
         self.tournament_date = tournament_date
         self.tournament_data = tournament_data
 
-        # test function, and potentially do a lot of validation beforehand, so I do not need to do a lot of checks here.
-        self.players = np.concatenate(self.tournament_data["player1"].to_numpy().T,self.tournament_data["player2"].to_numpy().T)
+        reverse_playerbook = {v: k for k, v in playerbook.items()}     
+        self.tournament_data["player_id"] = self.tournament_data["name"].map(reverse_playerbook)
+        
+        if self.tournament_data["player_id"].isna().any():
+            missing_players = self.tournament_data[self.tournament_data["player_id"].isna()]["name"].tolist()
+            raise ValueError(f"Players not found in playerbook: {', '.join(missing_players)}")
+
+        self.tournament_data["blank_points"] = self.tournament_data["rank"].map(RULES["blank_points"])
 
         self.level_multiplier = 1.0
-        self.player_multiplier = 1.0 # count players in tournament_data
         
         pass
-
+  
     def update_tournament_level_multiplier(self, ranking):
         # calculate based on input ranking the multiplier of the tournament
         # so every player in the tournament within a certain tier adds to the tournament multiplier
@@ -39,14 +47,12 @@ class RNLTournament:
         self.level_multiplier = 1.0
         pass
 
-    def get_multipliers(self):
-        return self.level_multiplier, self.player_multiplier
+    def calculate_tournament_points(self):
+        # calculate the points for the tournament 
+        self.tournament_data["tournament_points"] = self.tournament_data["blank_points"] * self.level_multiplier
+
+    def get_tournament_points(self):
+        return dict(zip(self.tournament_data["player_id"], self.tournament_data["tournament_points"]))
     
-    @staticmethod
-    def build_tournament_key(filename : str):
-        file_strings = Path(filename).stem.split("_")
-        key = datetime.strptime(
-                file_strings[0], "%Y-%m-%d"
-            ).strftime("%y%m%d") + file_strings[1][0]
-        return key
+
 
