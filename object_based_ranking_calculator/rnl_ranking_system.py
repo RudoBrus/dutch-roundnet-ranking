@@ -16,7 +16,9 @@ class RNLRankingSystem:
     """
     Represents a ranking system in the RNL ranking system.
     todo:
-
+    - add db make, save and load
+    - add ranking save and load
+    - add calculate ranking
     """
     def __init__(self, name : str, start_date : datetime.date):
         # first check if a ranking system with this name exists
@@ -53,71 +55,62 @@ class RNLRankingSystem:
         # all in subfolder rankings/self.name
         pass
   
-    def load_tournament_from_file(self, filename):
-        # first check the tournament db
-        tournament_date = datetime.strptime(
-                Path(filename).stem.split("_")[0], "%Y-%m-%d"
-            )
+    # def load_tournament_from_file(self, filename):
+    #     # first check the tournament db
+    #     tournament_date = datetime.strptime(
+    #             Path(filename).stem.split("_")[0], "%Y-%m-%d"
+    #         )
         
-        # if tournament_date < self.current_date:
-        #     print("Cannot calculate tournament for date before last calculation date; reset the ranking if you like to add in this tournamnet")
-        #     return
+    #     # if tournament_date < self.current_date:
+    #     #     print("Cannot calculate tournament for date before last calculation date; reset the ranking if you like to add in this tournamnet")
+    #     #     return
         
-        tournament_results = pd.read_csv(filename)
-        tournament_key = RNLTournament.build_tournament_key(filename)
+    #     tournament_results = pd.read_csv(filename)
+    #     tournament_key = RNLTournament.build_tournament_key(filename)
 
-        tournament = RNLTournament(tournament_key, tournament_date, tournament_results)
+    #     tournament = RNLTournament(tournament_key, tournament_date, tournament_results)
 
-        self.tournamentbook[tournament_key] = tournament_date
-        self.tournaments[tournament_key] = tournament
+    #     self.tournamentbook[tournament_key] = tournament_date
+    #     self.tournaments[tournament_key] = tournament
 
-        return tournament_key
+    #     return tournament_key
 
 
-    def update_ranking_with_tournament(self, tournament_id):
-        tournament = self.tournaments[tournament_id]
-
-        if tournament.tournament_date < self.current_date:
-            print("WRONG")
-
-        players = tournament.return_players()
-        _, player_ids = self.update_player_base(players)
-
-        self.player_rating_db = [] # load 
-
-        for player_id in player_ids:
-            if player_id in self.player_rating_db:
-                player_entity = RNLPlayer.load_player(player_id)
-            else:
-                player_entity = RNLPlayer(player_id, self.playerbase[player_id])
-            if player_entity not in self.players:
-                self.players.add(player_entity)
+    def update_ranking_with_tournament(self, path_to_tournament_file : Path = None):
+        # if no path is provided, open window to select file
+        if path_to_tournament_file is None:
+            path_to_tournament_file = Path(filedialog.askopenfilename(filetypes=[("CSV files", "*.csv")]))
         
-        self.current_ranking = self.calculate_ranking(tournament.tournament_date)
-        tournament.update_tournament_level_multiplier()
-        tournament.update_tournament_player_multiplier(self.current_ranking)
+        # first calculate the ranking on tournament day:
+        current_date = RNLTournamentMgr.get_tournament_date(path_to_tournament_file)
+        self.current_ranking = self.calculate_ranking(current_date)
 
-        tournament.distribute_points(self.players)
+        # add players to player_mgr
+        tournament_player_names = RNLTournamentMgr.get_tournament_player_names(path_to_tournament_file)
+        for player_name in tournament_player_names:
+            if self.player_mgr.get_player_id(player_name) is None:
+                self.player_mgr.add_player(player_name)
+        
+        # add tournament to tournament_mgr
+        playerbook = self.player_mgr.get_player_book()
+        tournament_key = self.tournament_mgr.add_tournament(path_to_tournament_file, playerbook)
+        # calculate points
+        points = self.tournament_mgr.calculate_tournament_points(tournament_key, self.current_ranking)
+        # add points to players
+        self.player_mgr.add_tournament_points_to_players(points, self.current_date, tournament_key)
+        self.player_mgr.update_players(self.current_date)
 
+        # save ranking
+        self.rankingbook[current_date] = self.current_ranking
+        new_ranking = self.calculate_ranking(self.current_date)
+        self.current_ranking = new_ranking
+        self.current_date = current_date
 
-
-        pass
-
-    def update_player_base(self, players) -> tuple[list, list]:
-        # load player base
-        # if new player, add, make ID
-        # return [(all players ID's), (ids from players in func)]
-        self.playerbase = {}
-        return [],[]
-
-    def add_new_player(self):
-        pass
-
-    def calculate_points(self):
-        pass
+        return new_ranking
 
     def calculate_ranking(self, date:datetime.date):
-        pass
+        # For now throw exception
+        raise NotImplementedError("Ranking calculation not implemented")
 
 if __name__ == "__main__":
     pass

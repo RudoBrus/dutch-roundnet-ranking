@@ -26,7 +26,8 @@ class RNLTournament:
         
         pass
   
-    def update_tournament_level_multiplier(self, ranking):
+    def update_tournament_level_multiplier(self, ranking: pd.DataFrame):
+        raise NotImplementedError("Tournament level multiplier not implemented")
         # calculate based on input ranking the multiplier of the tournament
         # so every player in the tournament within a certain tier adds to the tournament multiplier
 
@@ -52,7 +53,7 @@ class RNLTournament:
         self.tournament_data["tournament_points"] = self.tournament_data["blank_points"] * self.level_multiplier
 
     def get_tournament_points(self):
-        return dict(zip(self.tournament_data["player_id"], self.tournament_data["tournament_points"]))
+        return dict(zip(self.tournament_data["player_id"], [self.tournament_data["rank"], self.tournament_data["tournament_points"]]))
     
 
 

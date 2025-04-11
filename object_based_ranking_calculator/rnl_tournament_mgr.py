@@ -3,7 +3,7 @@ from pathlib import Path
 from datetime import datetime
 
 from rnl_tournament import RNLTournament
-
+from rnl_player import RNLPlayer
 class RNLTournamentMgr:
     """
     This class manages the tournaments and calculates the points for each tournament.
@@ -23,15 +23,19 @@ class RNLTournamentMgr:
 
         pass
 
-    def add_tournament(self, tournament_file : Path):
+    def add_tournament(self, tournament_file : Path, playerbook : dict[str, str]):
         tournament_date, tournament_basename = tournament_file.stem.split("_")
         tournament_key = self.build_tournament_key(tournament_basename, tournament_date)
-
+        
+        if tournament_key in self.tournaments:
+            print(f"Tournament {tournament_key} already exists")
+            return
+        
         tournament_data = pd.read_csv(tournament_file)
 
-        tournament = RNLTournament(tournament_basename, tournament_key, tournament_date, tournament_data)
+        tournament = RNLTournament(tournament_basename, tournament_key, tournament_date, tournament_data, playerbook)
         self.tournaments[tournament_key] = tournament
-
+        return tournament_key
 
     def calculate_tournament_points(self, tournament_key : str, ranking : pd.DataFrame):
         tournament = self.tournaments[tournament_key]
@@ -40,9 +44,19 @@ class RNLTournamentMgr:
         return tournament.get_tournament_points()
 
     @staticmethod
+    def get_tournament_player_names(tournament_file : Path):
+        tournament_data = pd.read_csv(tournament_file)
+        return tournament_data["name"].unique()
+
+    @staticmethod
     def build_tournament_key(basename : str, tournament_date : datetime.date):
         key = tournament_date.strftime("%y%m%d") + basename[0]
         return key
+    
+    @staticmethod
+    def get_tournament_date(tournament_file : Path):
+        tournament_date = tournament_file.stem.split("_")[0]
+        return datetime.strptime(tournament_date, "%Y-%m-%d").date()
     
 
 

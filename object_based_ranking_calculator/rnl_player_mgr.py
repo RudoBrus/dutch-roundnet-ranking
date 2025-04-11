@@ -1,6 +1,9 @@
 import sqlite3
 import uuid
 from rnl_player import RNLPlayer
+from datetime import datetime
+from pathlib import Path
+
 
 class RNLPlayerMgr:
     """
@@ -78,4 +81,22 @@ class RNLPlayerMgr:
         """
         return self.playerbook
         
+    def add_tournament_points_to_players(self, tournament_points : dict[str, tuple[int, float]], tournament_date : datetime.date, tournament_key : str):
+        """
+        add points to the players
+        """
+        for player_id, points in tournament_points.items():
+            tournament_result = {}
+            tournament_result["tournament_key"] = tournament_key
+            tournament_result["tournament_date"] = tournament_date
+            tournament_result["team_rank"] = points[0]
+            tournament_result["team_points"] = points[1]
+            self.players[player_id].add_tournament_result(tournament_result)
+
+    def update_players(self, current_date : datetime.date):
+        """
+        update the players
+        """
+        for player_id in self.players:
+            self.players[player_id].update(current_date)
 
