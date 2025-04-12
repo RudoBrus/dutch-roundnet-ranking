@@ -1,16 +1,19 @@
 import pandas as pd
 import os
-from datetime import datetime
-
+from datetime import datetime, date
+import json
 from pathlib import Path
+from tkinter import filedialog
 
 from rnl_tournament import RNLTournament
 from rnl_player import RNLPlayer
 from rnl_tournament_mgr import RNLTournamentMgr
 from rnl_player_mgr import RNLPlayerMgr
+
 PLAYER_DB = r"../ranking_db/players.db"
 TOURNAMENT_RECORDS_FOLDER = r"../ranking_calculator/tournament_data"
-
+RULES_PATH = r"dutch-roundnet-ranking/object_based_ranking_calculator/rules.json"
+RULES = json.load(open(Path(RULES_PATH).resolve()))
 
 class RNLRankingSystem:
     """
@@ -20,17 +23,17 @@ class RNLRankingSystem:
     - add ranking save and load
     - add calculate ranking
     """
-    def __init__(self, name : str, start_date : datetime.date):
+    def __init__(self, name : str, start_date : datetime, debug : bool = True):
         # first check if a ranking system with this name exists
-        if Path(f"../rankings/{name}").exists():
+        if Path(f"../rankings/{name}").exists() and not debug:
             raise ValueError(f"Ranking system with name {name} already exists")
 
         self.name = name
         self.version = 0.1
 
-        self.rankingbook : dict[datetime.date, pd.DataFrame] = {}   
+        self.rankingbook : dict[datetime, pd.DataFrame] = {}   
 
-        self.current_date : datetime.date = start_date
+        self.current_date : datetime = start_date
 
         # lets start building the setup
         self.current_ranking = pd.DataFrame(columns=["player_id", "player_name", "player_rating", "player_ranking_composition"])
@@ -108,12 +111,27 @@ class RNLRankingSystem:
 
         return new_ranking
 
-    def calculate_ranking(self, date:datetime.date):
-        # For now throw exception
-        raise NotImplementedError("Ranking calculation not implemented")
+    def calculate_ranking(self, date:datetime):
+        self.player_mgr.update_players(date)
+        standings = self.player_mgr.get_player_results() # df with playername, id, rating and ranking composition
+
+        ranking = standings.sort_values(by="rating", ascending=False)
+        self.current_ranking = ranking
+
+        return ranking
+        
+        # # For now throw exception
+        # raise NotImplementedError("Ranking calculation not implemented")
+    
 
 if __name__ == "__main__":
-    pass
+    # test the ranking system
+    ranking_system = RNLRankingSystem(f"test{datetime.now().strftime('%Y%m%d#%H%M%S')}", datetime(2023, 1, 1))
+    try:
+        while True:
+            ranking_system.update_ranking_with_tournament()
+    except KeyboardInterrupt:
+        pass
 
 # Initialize ranking, 
 # load in a player base file (matching player id's and names) (starting empty)

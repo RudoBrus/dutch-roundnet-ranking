@@ -4,10 +4,11 @@ import json
 from datetime import datetime
 from pathlib import Path
 
-RULES = json.load(open("rules.json"))
+RULES_PATH = r"dutch-roundnet-ranking/object_based_ranking_calculator/rules.json"
+RULES = json.load(open(Path(RULES_PATH).resolve()))
 
 class RNLTournament:
-    def __init__(self, tournament_name : str, tournament_key : str, tournament_date: datetime.date, tournament_data:pd.DataFrame, playerbook : dict[str, str]):
+    def __init__(self, tournament_name : str, tournament_key : str, tournament_date: datetime, tournament_data:pd.DataFrame, playerbook : dict[str, str]):
         self.tournament_name = tournament_name
         self.tournament_key = tournament_key
         self.tournament_date = tournament_date
@@ -27,7 +28,8 @@ class RNLTournament:
         pass
   
     def update_tournament_level_multiplier(self, ranking: pd.DataFrame):
-        raise NotImplementedError("Tournament level multiplier not implemented")
+        print("not implemented, skipping")
+        # raise NotImplementedError("Tournament level multiplier not implemented")
         # calculate based on input ranking the multiplier of the tournament
         # so every player in the tournament within a certain tier adds to the tournament multiplier
 

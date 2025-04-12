@@ -1,9 +1,14 @@
 import pandas as pd
 from pathlib import Path
 from datetime import datetime
-
+import json
 from rnl_tournament import RNLTournament
 from rnl_player import RNLPlayer
+
+RULES_PATH = r"dutch-roundnet-ranking/object_based_ranking_calculator/rules.json"
+RULES = json.load(open(Path(RULES_PATH).resolve()))
+
+
 class RNLTournamentMgr:
     """
     This class manages the tournaments and calculates the points for each tournament.
@@ -25,6 +30,7 @@ class RNLTournamentMgr:
 
     def add_tournament(self, tournament_file : Path, playerbook : dict[str, str]):
         tournament_date, tournament_basename = tournament_file.stem.split("_")
+        tournament_date = datetime.strptime(tournament_date, "%Y-%m-%d")
         tournament_key = self.build_tournament_key(tournament_basename, tournament_date)
         
         if tournament_key in self.tournaments:
@@ -49,14 +55,14 @@ class RNLTournamentMgr:
         return tournament_data["name"].unique()
 
     @staticmethod
-    def build_tournament_key(basename : str, tournament_date : datetime.date):
+    def build_tournament_key(basename : str, tournament_date : datetime):
         key = tournament_date.strftime("%y%m%d") + basename[0]
         return key
     
     @staticmethod
     def get_tournament_date(tournament_file : Path):
         tournament_date = tournament_file.stem.split("_")[0]
-        return datetime.strptime(tournament_date, "%Y-%m-%d").date()
+        return datetime.strptime(tournament_date, "%Y-%m-%d")
     
 
 

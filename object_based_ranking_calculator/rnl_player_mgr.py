@@ -1,9 +1,16 @@
 import sqlite3
 import uuid
-from rnl_player import RNLPlayer
 from datetime import datetime
 from pathlib import Path
+import pandas as pd
+import json
 
+from rnl_player import RNLPlayer
+
+PLAYER_DB = r"../ranking_db/players.db"
+TOURNAMENT_RECORDS_FOLDER = r"../ranking_calculator/tournament_data"
+RULES_PATH = r"dutch-roundnet-ranking/object_based_ranking_calculator/rules.json"
+RULES = json.load(open(Path(RULES_PATH).resolve()))
 
 class RNLPlayerMgr:
     """
@@ -42,11 +49,12 @@ class RNLPlayerMgr:
         pass
 
     @staticmethod
-    def load_player_db(self, ranking_folder : Path) -> RNLPlayerMgr:
+    def load_player_db(ranking_folder : Path) -> 'RNLPlayerMgr':
         """
         load the playerbook/players from the player_db_file
         """
-        pass
+        player_mgr = RNLPlayerMgr(ranking_folder)
+        return player_mgr
 
     def get_player_id(self, player_name : str) -> str | None:
         """
@@ -81,7 +89,7 @@ class RNLPlayerMgr:
         """
         return self.playerbook
         
-    def add_tournament_points_to_players(self, tournament_points : dict[str, tuple[int, float]], tournament_date : datetime.date, tournament_key : str):
+    def add_tournament_points_to_players(self, tournament_points : dict[str, tuple[int, float]], tournament_date : datetime, tournament_key : str):
         """
         add points to the players
         """
@@ -93,10 +101,22 @@ class RNLPlayerMgr:
             tournament_result["team_points"] = points[1]
             self.players[player_id].add_tournament_result(tournament_result)
 
-    def update_players(self, current_date : datetime.date):
+    def update_players(self, current_date : datetime):
         """
         update the players
         """
         for player_id in self.players:
             self.players[player_id].update(current_date)
+
+    def get_player_results(self) -> pd.DataFrame:
+        """
+        get the player ratings and composition
+        """
+
+        results = []
+        for player_id in self.players:
+            results.append(self.players[player_id].get_player_rating_composition(include_name=True))
+
+        return pd.DataFrame(results, columns=["player_id", "player_name", "rating", "rating_composition"])
+
 

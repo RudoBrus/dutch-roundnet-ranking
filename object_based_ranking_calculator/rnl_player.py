@@ -1,10 +1,12 @@
-from types import Tuple
+# from types import Tuple
 from datetime import datetime
 import numpy as np
 import json
 import sqlite3
+from pathlib import Path
 
-RULES = json.load(open("rules.json"))
+RULES_PATH = r"dutch-roundnet-ranking/object_based_ranking_calculator/rules.json"
+RULES = json.load(open(Path(RULES_PATH).resolve()))
 
 class RNLPlayer:
     """
@@ -95,8 +97,11 @@ class RNLPlayer:
             "AGE_MULTIPLIER" : RNLPlayer.get_age_multiplier(t["DATE"], self.date_of_last_update)
             } for t in top_tournaments]
 
-    def get_player_rating_composition(self):
-        return self.player_id, self.rating, self.rating_composition
+    def get_player_rating_composition(self, include_name : bool = False):
+        if include_name:
+            return self.player_id, self.player_name, self.rating, self.rating_composition
+        else:
+            return self.player_id, self.rating, self.rating_composition
     
     def save_to_database(self, conn):
         pass
