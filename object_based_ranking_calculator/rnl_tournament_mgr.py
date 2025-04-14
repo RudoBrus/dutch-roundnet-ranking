@@ -38,6 +38,7 @@ class RNLTournamentMgr:
             return
         
         tournament_data = pd.read_csv(tournament_file)
+        tournament_data = tournament_data[tournament_data["category"] == RULES["category_selected"]]
 
         tournament = RNLTournament(tournament_basename, tournament_key, tournament_date, tournament_data, playerbook)
         self.tournaments[tournament_key] = tournament

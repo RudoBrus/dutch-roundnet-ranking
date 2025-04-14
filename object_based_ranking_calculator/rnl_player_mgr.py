@@ -99,6 +99,8 @@ class RNLPlayerMgr:
             tournament_result["tournament_date"] = tournament_date
             tournament_result["team_rank"] = points[0]
             tournament_result["team_points"] = points[1]
+            tournament_result["team_key"] = None
+            tournament_result["team_name"] = None
             self.players[player_id].add_tournament_result(tournament_result)
 
     def update_players(self, current_date : datetime):

@@ -21,14 +21,31 @@ class RNLTournament:
             missing_players = self.tournament_data[self.tournament_data["player_id"].isna()]["name"].tolist()
             raise ValueError(f"Players not found in playerbook: {', '.join(missing_players)}")
 
-        self.tournament_data["blank_points"] = self.tournament_data["rank"].map(RULES["blank_points"])
+        self.map_tournament_points()
 
         self.level_multiplier = 1.0
         
         pass
+
+    def map_tournament_points(self):
+        blank_points = {int(k): v for k, v in RULES["blank_points"].items()}
+        self.tournament_data["blank_points"] = self.tournament_data["rank"].map(blank_points)
+
   
     def update_tournament_level_multiplier(self, ranking: pd.DataFrame):
-        print("not implemented, skipping")
+        self.level_multiplier = 1.0
+        for index, row in self.tournament_data.iterrows():
+            player_id = row["player_id"]
+            if player_id in ranking["player_id"].values:
+                player_rank = ranking[ranking["player_id"] == player_id].index[0] + 1
+                for threshold, multiplier in RULES["player_multipliers"].items():
+                    if player_rank <= int(threshold):
+                        self.level_multiplier += multiplier
+                        break
+            else:
+                continue
+
+
         # raise NotImplementedError("Tournament level multiplier not implemented")
         # calculate based on input ranking the multiplier of the tournament
         # so every player in the tournament within a certain tier adds to the tournament multiplier
@@ -47,7 +64,7 @@ class RNLTournament:
 #     base_points = tournament_results["rank"].map(POINTS_MAPPING)
 #     return base_points * multiplier
 
-        self.level_multiplier = 1.0
+        print(f"Tournament level multiplier: {self.level_multiplier}")
         pass
 
     def calculate_tournament_points(self):
@@ -55,7 +72,7 @@ class RNLTournament:
         self.tournament_data["tournament_points"] = self.tournament_data["blank_points"] * self.level_multiplier
 
     def get_tournament_points(self):
-        return dict(zip(self.tournament_data["player_id"], [self.tournament_data["rank"], self.tournament_data["tournament_points"]]))
+        return dict(zip(self.tournament_data["player_id"], zip(self.tournament_data["rank"], self.tournament_data["tournament_points"])))
     
 
 

@@ -88,6 +88,8 @@ class RNLRankingSystem:
         current_date = RNLTournamentMgr.get_tournament_date(path_to_tournament_file)
         self.current_ranking = self.calculate_ranking(current_date)
 
+        # TODO: figure out where to update the date. Right now something goes wrong here.
+
         # add players to player_mgr
         tournament_player_names = RNLTournamentMgr.get_tournament_player_names(path_to_tournament_file)
         for player_name in tournament_player_names:
@@ -116,6 +118,7 @@ class RNLRankingSystem:
         standings = self.player_mgr.get_player_results() # df with playername, id, rating and ranking composition
 
         ranking = standings.sort_values(by="rating", ascending=False)
+        ranking = ranking.reset_index(drop=True)
         self.current_ranking = ranking
 
         return ranking
@@ -126,12 +129,20 @@ class RNLRankingSystem:
 
 if __name__ == "__main__":
     # test the ranking system
+    paths = [p for p in Path(r"D:\STZN\Files\Roundnet\RoundnetNL\DutchRoundnetRanking\dutch-roundnet-ranking\ranking_calculator\tournament_data").glob("*.csv")]
     ranking_system = RNLRankingSystem(f"test{datetime.now().strftime('%Y%m%d#%H%M%S')}", datetime(2023, 1, 1))
     try:
-        while True:
-            ranking_system.update_ranking_with_tournament()
+        for path in paths: 
+            ranking_system.update_ranking_with_tournament(Path(path))
+            print(f"Updated ranking with tournament {path}")
+            print(f"Current ranking at {ranking_system.current_date}:")
+            print(ranking_system.current_ranking.head(15))
+            print("-"*100)
+        # print(ranking_system.current_ranking)
     except KeyboardInterrupt:
         pass
+
+    print("hold")
 
 # Initialize ranking, 
 # load in a player base file (matching player id's and names) (starting empty)

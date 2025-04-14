@@ -55,7 +55,7 @@ class RNLPlayer:
     def get_age_multiplier(tournament_date : datetime, calculation_date : datetime) -> float:
         age_in_months = (calculation_date - tournament_date).days // 30
         for threshold, age_multiplier in RULES["age_multipliers"].items():
-            if age_in_months <= threshold:
+            if age_in_months <= int(threshold):
                 return age_multiplier
         raise ValueError(f"Age multiplier not found for {age_in_months} months")
 
@@ -66,7 +66,7 @@ class RNLPlayer:
     def update_current_tournament_scores(self, current_date : datetime):
         for tournament in self.tournament_participation_history:
             original_points : int = tournament["POINTS"]
-            multiplier : float = RNLPlayer.get_age_multiplier(tournament["DATE"],current_date)
+            multiplier : float = RNLPlayer.get_age_multiplier(tournament["DATE"], current_date)
 
             tournament["CUR_POINTS"] : int = original_points*multiplier
             self.date_of_last_update : datetime = current_date
@@ -89,7 +89,7 @@ class RNLPlayer:
 
         # Store the rating composition
         self.rating_composition = [{
-            "NAME" : t["NAME"],
+            # "NAME" : t["NAME"],
             "KEY" : t["KEY"],
             "DATE" : t["DATE"],
             "RANK" : t["RANK"],
