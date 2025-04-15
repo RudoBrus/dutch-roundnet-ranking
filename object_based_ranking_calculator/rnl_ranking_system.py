@@ -85,8 +85,8 @@ class RNLRankingSystem:
             path_to_tournament_file = Path(filedialog.askopenfilename(filetypes=[("CSV files", "*.csv")]))
         
         # first calculate the ranking on tournament day:
-        current_date = RNLTournamentMgr.get_tournament_date(path_to_tournament_file)
-        self.current_ranking = self.calculate_ranking(current_date)
+        self.current_date = RNLTournamentMgr.get_tournament_date(path_to_tournament_file)
+        self.current_ranking = self.calculate_ranking(self.current_date)
 
         # TODO: figure out where to update the date. Right now something goes wrong here.
 
@@ -100,16 +100,15 @@ class RNLRankingSystem:
         playerbook = self.player_mgr.get_player_book()
         tournament_key = self.tournament_mgr.add_tournament(path_to_tournament_file, playerbook)
         # calculate points
-        points = self.tournament_mgr.calculate_tournament_points(tournament_key, self.current_ranking)
+        points = self.tournament_mgr.calculate_tournament_points(tournament_key, self.current_ranking[self.current_ranking["rating"] > 0])
         # add points to players
         self.player_mgr.add_tournament_points_to_players(points, self.current_date, tournament_key)
         self.player_mgr.update_players(self.current_date)
 
         # save ranking
-        self.rankingbook[current_date] = self.current_ranking
+        self.rankingbook[self.current_date] = self.current_ranking
         new_ranking = self.calculate_ranking(self.current_date)
         self.current_ranking = new_ranking
-        self.current_date = current_date
 
         return new_ranking
 
@@ -119,13 +118,23 @@ class RNLRankingSystem:
 
         ranking = standings.sort_values(by="rating", ascending=False)
         ranking = ranking.reset_index(drop=True)
-        self.current_ranking = ranking
+        # self.current_ranking = ranking
 
         return ranking
         
         # # For now throw exception
         # raise NotImplementedError("Ranking calculation not implemented")
     
+    def demo_function_print_stats(self, mode : str = "tournament"):
+        if mode == "tournament":
+            for key, tournament in self.tournament_mgr.get_tournaments().items():
+                print(f"Tournament {key}:", end="\t")
+                print(f"{tournament.level_multiplier:.2f}", end="\t")
+                print(f"{len(tournament.tournament_data)} players")
+
+    def demo_save_ranking_csv(self):
+        filename = f"{self.current_date.strftime('%Y%m%d')}_{self.name}_{self.version}_{RULES['category_selected']}.csv"
+        self.current_ranking.to_csv(self.ranking_folder / filename, index=False)
 
 if __name__ == "__main__":
     # test the ranking system
@@ -133,16 +142,18 @@ if __name__ == "__main__":
     ranking_system = RNLRankingSystem(f"test{datetime.now().strftime('%Y%m%d#%H%M%S')}", datetime(2023, 1, 1))
     try:
         for path in paths: 
-            ranking_system.update_ranking_with_tournament(Path(path))
+            ranking = ranking_system.update_ranking_with_tournament(Path(path))
             print(f"Updated ranking with tournament {path}")
             print(f"Current ranking at {ranking_system.current_date}:")
-            print(ranking_system.current_ranking.head(15))
+            print(ranking.head(15))
             print("-"*100)
         # print(ranking_system.current_ranking)
     except KeyboardInterrupt:
         pass
 
-    print("hold")
+    ranking_system.demo_function_print_stats()
+    ranking_system.demo_save_ranking_csv()
+    # print("hold")
 
 # Initialize ranking, 
 # load in a player base file (matching player id's and names) (starting empty)

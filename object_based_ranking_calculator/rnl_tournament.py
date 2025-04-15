@@ -22,7 +22,6 @@ class RNLTournament:
             raise ValueError(f"Players not found in playerbook: {', '.join(missing_players)}")
 
         self.map_tournament_points()
-
         self.level_multiplier = 1.0
         
         pass
@@ -30,7 +29,6 @@ class RNLTournament:
     def map_tournament_points(self):
         blank_points = {int(k): v for k, v in RULES["blank_points"].items()}
         self.tournament_data["blank_points"] = self.tournament_data["rank"].map(blank_points)
-
   
     def update_tournament_level_multiplier(self, ranking: pd.DataFrame):
         self.level_multiplier = 1.0
@@ -45,27 +43,7 @@ class RNLTournament:
             else:
                 continue
 
-
-        # raise NotImplementedError("Tournament level multiplier not implemented")
-        # calculate based on input ranking the multiplier of the tournament
-        # so every player in the tournament within a certain tier adds to the tournament multiplier
-
-#         def calculate_points(
-#     tournament_results: pd.DataFrame, ranking: pd.DataFrame
-# ) -> pd.Series:
-#     multiplier = 1.0
-#     for player in tournament_results["name"]:
-#         rank_row = ranking[ranking["name"] == player]
-#         if not rank_row.empty:
-#             rank = rank_row["rank"].values[0]
-#             for threshold, player_multiplier in PLAYER_MULTIPLIERS.items():
-#                 if rank <= threshold:
-#                     multiplier += player_multiplier
-#     base_points = tournament_results["rank"].map(POINTS_MAPPING)
-#     return base_points * multiplier
-
-        print(f"Tournament level multiplier: {self.level_multiplier}")
-        pass
+        return self.level_multiplier
 
     def calculate_tournament_points(self):
         # calculate the points for the tournament 

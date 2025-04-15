@@ -65,5 +65,10 @@ class RNLTournamentMgr:
         tournament_date = tournament_file.stem.split("_")[0]
         return datetime.strptime(tournament_date, "%Y-%m-%d")
     
+    def get_tournaments(self) -> dict[str, RNLTournament]:
+        return self.tournaments
+
+    def get_tournament(self, tournament_key : str) -> RNLTournament:
+        return self.tournaments[tournament_key]
 
 

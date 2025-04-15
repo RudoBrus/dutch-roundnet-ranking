@@ -41,6 +41,7 @@ class RNLPlayer:
         tournament_result["TEAM_NAME"] : str = result["team_name"] if result["team_name"] else None
 
         tournament_result["CUR_POINTS"] : int = tournament_result["POINTS"]
+        tournament_result["AGE_MULTIPLIER"] : float = 1.0
 
         self.tournament_participation_history.append(tournament_result)
 
@@ -65,11 +66,10 @@ class RNLPlayer:
 
     def update_current_tournament_scores(self, current_date : datetime):
         for tournament in self.tournament_participation_history:
-            original_points : int = tournament["POINTS"]
-            multiplier : float = RNLPlayer.get_age_multiplier(tournament["DATE"], current_date)
-
-            tournament["CUR_POINTS"] : int = original_points*multiplier
-            self.date_of_last_update : datetime = current_date
+            tournament["AGE_MULTIPLIER"] : float = RNLPlayer.get_age_multiplier(tournament["DATE"], current_date)
+            tournament["CUR_POINTS"] : int = tournament["POINTS"] * tournament["AGE_MULTIPLIER"]
+        
+        self.date_of_last_update : datetime = current_date
 
     def update_player_rating(self):
         self.rating = 0.0
@@ -85,16 +85,16 @@ class RNLPlayer:
         top_tournaments = sorted_tournaments[:RULES["number_of_tournaments_in_ranking_composition"]]
 
         # Calculate total rating from top tournaments
-        self.rating = sum(t["CUR_POINTS"] for t in top_tournaments)
+        self.rating = round(sum(t["CUR_POINTS"] for t in top_tournaments), 1)
 
         # Store the rating composition
         self.rating_composition = [{
             # "NAME" : t["NAME"],
             "KEY" : t["KEY"],
-            "DATE" : t["DATE"],
+            "DATE" : t["DATE"].strftime("%Y-%m-%d"),
             "RANK" : t["RANK"],
-            "POINTS" : t["CUR_POINTS"],
-            "AGE_MULTIPLIER" : RNLPlayer.get_age_multiplier(t["DATE"], self.date_of_last_update)
+            "POINTS" : round(t["CUR_POINTS"], 1),
+            "AGE_MULTIPLIER" : t["AGE_MULTIPLIER"]
             } for t in top_tournaments]
 
     def get_player_rating_composition(self, include_name : bool = False):
