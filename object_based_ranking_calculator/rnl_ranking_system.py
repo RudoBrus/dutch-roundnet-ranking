@@ -30,6 +30,8 @@ class RNLRankingSystem:
 
         self.name = name
         self.version = 0.1
+        self.category_selected = RULES["category_selected"]
+        print(f"Initializing ranking system {self.name} with version {self.version}, selected category: {RULES['category_sets'][int(self.category_selected)-1]['category_description']}")
 
         self.rankingbook : dict[datetime, pd.DataFrame] = {}   
 
@@ -133,7 +135,7 @@ class RNLRankingSystem:
                 print(f"{len(tournament.tournament_data)} players")
 
     def demo_save_ranking_csv(self):
-        filename = f"{self.current_date.strftime('%Y%m%d')}_{self.name}_{self.version}_{RULES['category_selected']}.csv"
+        filename = f"{self.current_date.strftime('%Y%m%d')}_{self.name}_{self.version}_{RULES['category_sets'][int(self.category_selected)-1]['category_description']}.csv"
         self.current_ranking.to_csv(self.ranking_folder / filename, index=False)
 
 if __name__ == "__main__":

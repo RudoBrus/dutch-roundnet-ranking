@@ -37,8 +37,15 @@ class RNLTournamentMgr:
             print(f"Tournament {tournament_key} already exists")
             return
         
+        # TODO: make function to read tournament data
         tournament_data = pd.read_csv(tournament_file)
-        tournament_data = tournament_data[tournament_data["category"] == RULES["category_selected"]]
+        category_set = RULES["category_sets"][int(RULES["category_selected"])-1]
+        tournament_data = tournament_data[tournament_data["category"].isin(category_set["category_entries"])]
+        if len(category_set["category_entries"]) > 1:
+            # Get lowest rank from first category (highest ranking number)
+            lowest_rank = tournament_data[tournament_data["category"] == category_set["category_entries"][0]]["rank"].max()
+            # add this ranking shift to the second category
+            tournament_data.loc[tournament_data["category"] == category_set["category_entries"][1], "rank"] += lowest_rank - RULES["ranking_shift"]
 
         tournament = RNLTournament(tournament_basename, tournament_key, tournament_date, tournament_data, playerbook)
         self.tournaments[tournament_key] = tournament
@@ -53,6 +60,8 @@ class RNLTournamentMgr:
     @staticmethod
     def get_tournament_player_names(tournament_file : Path):
         tournament_data = pd.read_csv(tournament_file)
+        category_set = RULES["category_sets"][int(RULES["category_selected"])-1]
+        tournament_data = tournament_data[tournament_data["category"].isin(category_set["category_entries"])]
         return tournament_data["name"].unique()
 
     @staticmethod

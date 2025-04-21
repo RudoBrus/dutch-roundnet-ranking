@@ -14,8 +14,8 @@ class RNLTournament:
         self.tournament_date = tournament_date
         self.tournament_data = tournament_data
 
-        reverse_playerbook = {v: k for k, v in playerbook.items()}     
-        self.tournament_data["player_id"] = self.tournament_data["name"].map(reverse_playerbook)
+        reverse_playerbook = {v: k for k, v in playerbook.items()}
+        self.tournament_data["player_id"] = self.tournament_data["name"].str.lower().map(reverse_playerbook)
         
         if self.tournament_data["player_id"].isna().any():
             missing_players = self.tournament_data[self.tournament_data["player_id"].isna()]["name"].tolist()

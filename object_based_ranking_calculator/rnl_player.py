@@ -16,7 +16,7 @@ class RNLPlayer:
     """
     def __init__(self, player_id: str, player_name: str, player_team : tuple[str, str] | None = None):
         self.player_id : str = player_id
-        self.player_name : str = player_name
+        self.player_name : str = player_name.lower()
 
         self.rating : float = 0.0
         self.player_teams_dict : dict[str, str] = {}

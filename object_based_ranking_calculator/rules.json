@@ -79,5 +79,28 @@
         "63": 25,
         "64": 25
     },
-    "category_selected": "women"
+    "category_selected": "3",
+    "category_sets": [
+        {
+            "category_id": "1",
+            "category_entries": ["women"],
+            "category_description": "Women's category"
+        },
+        {
+            "category_id": "2",
+            "category_entries": ["advanced", "intermediate"],
+            "category_description": "Open Advanced category"
+        },
+        {
+            "category_id": "3",
+            "category_entries": ["intermediate", "beginner"],
+            "category_description": "Open Intermediate category"
+        },
+        {
+            "category_id": "4",
+            "category_entries": ["beginner"],
+            "category_description": "Open Beginner category"
+        }
+    ],
+    "ranking_shift": 1
 }

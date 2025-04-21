@@ -60,8 +60,8 @@ class RNLPlayerMgr:
         """
         get the player_id of a player and check if the player exists
         """
-        if player_name in self.playerbook.values():
-            player_id = list(self.playerbook.keys())[list(self.playerbook.values()).index(player_name)]
+        if player_name.lower() in self.playerbook.values():
+            player_id = list(self.playerbook.keys())[list(self.playerbook.values()).index(player_name.lower())]
             return player_id
         else:
             return None
@@ -69,7 +69,7 @@ class RNLPlayerMgr:
     def add_player(self, player_name):
         if self.get_player_id(player_name) is None:
             player_id = str(uuid.uuid4())
-            self.playerbook[player_id] = player_name
+            self.playerbook[player_id] = player_name.lower()
             self.players[player_id] = RNLPlayer(player_id, player_name)
         else:
             raise ValueError(f"Player {player_name} already exists")
