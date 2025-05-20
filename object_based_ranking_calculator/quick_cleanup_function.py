@@ -13,24 +13,35 @@ if not file_path:
     print("No file selected.")
     exit()
 
+tournament_codex = {
+    'E' : "Enschede",
+    'G' : "Groningen",
+    'A' : "Amsterdam",
+    'H' : "Haarlem",
+    'U' : "Utrecht",
+    'N' : "NK"
+}
+
 # Read CSV
 df = pd.read_csv(file_path)
 
 # Process data
 flattened_rows = []
 for _, row in df.iterrows():
+    rank = _ + 1
     player_name = row['player_name']
+    player_name = ' '.join(word.capitalize() for word in player_name.split(' '))
     rating = row['rating']
     try:
         compositions = ast.literal_eval(row['rating_composition'])
     except Exception as e:
         compositions = []
     
-    entry = {'player_name': player_name, 'rating': rating}
+    entry = {'Rank': rank, 'Player': player_name, 'Rating': rating}
     for i, comp in enumerate(compositions[:3], start=1):
-        entry[f'key{i}'] = comp.get('KEY')
-        entry[f'date{i}'] = comp.get('DATE')
-        entry[f'pts{i}'] = comp.get('POINTS')
+        entry[f'Tournament {i}'] = tournament_codex[comp.get('KEY')[-1]]
+        entry[f'Date {i}'] = comp.get('DATE')
+        entry[f'Points {i}'] = comp.get('POINTS')
     
     flattened_rows.append(entry)
 
