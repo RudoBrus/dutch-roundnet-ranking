@@ -1,0 +1,35 @@
+name: Update the ranking
+
+on:
+  pull_request:
+    types: [labeled]
+
+permissions:
+  id-token: write
+  actions: write
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-ranking:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.label.name == 'update-ranking' }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.10
+
+      - name: Install dependencies
+        run: |
+          pip install pipenv
+          pipenv install --dev
+        shell: bash
+
+      - name: Run the ranking update script
+        run: scripts/all_categories.bash
+        shell: bash
