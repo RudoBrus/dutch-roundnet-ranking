@@ -35,7 +35,7 @@ jobs:
         shell: bash
 
       - name: Run the ranking update script
-        run: scripts/all_categories.bash
+        run: pipenv run python ranking_calculator --categories women advanced intermediate beginner
         shell: bash
 
       - name: Commit and push changes
