@@ -79,28 +79,22 @@
         "63": 70,
         "64": 70
     },
-    "category_selected": "2",
-    "category_sets": [
+    "categories": [
         {
-            "category_id": "1",
-            "category_entries": ["women"],
-            "category_description": "Women's category"
+            "category_name": "women",
+            "category_entries": ["women"]
         },
         {
-            "category_id": "2",
-            "category_entries": ["advanced", "intermediate"],
-            "category_description": "Open Advanced category"
+            "category_name": "advanced",
+            "category_entries": ["advanced", "intermediate"]
         },
         {
-            "category_id": "3",
-            "category_entries": ["intermediate", "beginner"],
-            "category_description": "Open Intermediate category"
+            "category_name": "intermediate",
+            "category_entries": ["intermediate", "beginner"]
         },
         {
-            "category_id": "4",
-            "category_entries": ["beginner"],
-            "category_description": "Open Beginner category"
+            "category_name": "beginner",
+            "category_entries": ["beginner"]
         }
-    ],
-    "ranking_shift": 1
+    ]
 }
