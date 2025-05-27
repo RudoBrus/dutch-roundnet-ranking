@@ -30,6 +30,10 @@ jobs:
           pipenv install --dev
         shell: bash
 
+      - name: Verify installed packages
+        run: pipenv run pip list
+        shell: bash
+
       - name: Run the ranking update script
         run: scripts/all_categories.bash
         shell: bash
