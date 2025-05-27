@@ -28,19 +28,14 @@ jobs:
         run: |
           pip install pipenv
           pipenv install --dev
-        shell: bash
-
-      - name: Verify installed packages
-        run: pipenv run pip list
-        shell: bash
 
       - name: Run the ranking update script
         run: pipenv run python ranking_calculator --categories women advanced intermediate beginner
-        shell: bash
 
       - name: Commit and push changes
         run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
           git add .
           git commit -m "Updated ranking"
           git push
-        shell: bash
