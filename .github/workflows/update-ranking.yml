@@ -36,7 +36,7 @@ jobs:
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-          git checkout ${{ github.ref_name }}
+          git checkout ${{ github.head_ref }}
           git add .
           git commit -m "Updated ranking"
-          git push ${{ github.ref_name }}
+          git push ${{ github.head_ref }}
