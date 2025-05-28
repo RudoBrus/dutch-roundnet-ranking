@@ -1,5 +1,5 @@
 {
-    "number_of_tournaments_in_ranking_composition": 3,
+    "max_counting_tournaments": 3,
     "player_multipliers": {
         "10": 0.1,
         "20": 0.06,
@@ -10,8 +10,7 @@
         "12": 1.0,
         "18": 0.8,
         "24": 0.6,
-        "48": 0.4,
-        "inf": 0.0
+        "48": 0.4
     },
     "blank_points": {
         "1": 700,
@@ -78,23 +77,5 @@
         "62": 70,
         "63": 70,
         "64": 70
-    },
-    "categories": [
-        {
-            "category_name": "women",
-            "category_entries": ["women"]
-        },
-        {
-            "category_name": "advanced",
-            "category_entries": ["advanced", "intermediate"]
-        },
-        {
-            "category_name": "intermediate",
-            "category_entries": ["intermediate", "beginner"]
-        },
-        {
-            "category_name": "beginner",
-            "category_entries": ["beginner"]
-        }
-    ]
+    }
 }

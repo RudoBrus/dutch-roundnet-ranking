@@ -1,15 +1,17 @@
 import argparse
+from datetime import datetime
 
-from ranking_calculator.config import RULES, TOURNAMENT_RECORDS_FOLDER
-from ranking_calculator.rnl_ranking_system import RNLRankingSystem
-
-
-def get_category_entries(selected_category: str) -> list[str]:
-    for category_rules in RULES["categories"]:
-        if category_rules["category_name"] == selected_category:
-            return category_rules["category_entries"]
-    raise ValueError(f"Category '{selected_category}' not found in rules.")
-
+from ranking_calculator.config import (
+    AGE_MULTIPLIERS,
+    RANKING_RESULT_FOLDER,
+    TOURNAMENT_DATA_DIRECTORY,
+)
+from ranking_calculator.export import export_ranking, export_tournament_history
+from ranking_calculator.ranking_system import RankingSystem
+from ranking_calculator.read_tournament_data import (
+    filter_tournaments_by_category,
+    load_relevant_tournaments,
+)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
@@ -18,25 +20,29 @@ if __name__ == "__main__":
     parser.add_argument(
         "--categories",
         nargs="+",
-        required=True,
-        help="List of categories to process, possible categories are women, advanced, intermediate and beginner.",
-    )
-    parser.add_argument(
-        "--test",
         type=str,
-        default=None,
-        help="Optional test name to include in the ranking file name.",
+        choices=["women", "advanced", "intermediate", "beginner"],
+        default=["women", "advanced", "intermediate", "beginner"],
+        help="List of categories to process. Possible categories are: women, advanced, intermediate, beginner.",
     )
     args = parser.parse_args()
-    tournament_paths = sorted(TOURNAMENT_RECORDS_FOLDER.glob("*.csv"))
+
+    tournaments = load_relevant_tournaments(
+        TOURNAMENT_DATA_DIRECTORY,
+        datetime.now(),
+        max(months for months in AGE_MULTIPLIERS),
+    )
     for category in args.categories:
         print(f"Processing category: {category}")
-        ranking_system = RNLRankingSystem(get_category_entries(category))
-        for path in tournament_paths:
-            ranking = ranking_system.update_ranking_with_tournament(path)
-            print(f"Updated ranking with tournament {path}")
-            print(f"Current ranking at {ranking_system.current_date}:")
-            print(ranking.head(15))
-            print("-" * 100)
-        ranking_system.demo_function_print_stats()
-        ranking_system.demo_save_ranking_csv(args.test)
+        category_tournaments = filter_tournaments_by_category(tournaments, category)
+        ranking_system = RankingSystem()
+        for tournament in category_tournaments:
+            ranking_system.add_tournament(tournament)
+        export_tournament_history(
+            category,
+            ranking_system.tournament_history,
+            RANKING_RESULT_FOLDER / f"{category}_tournament_history.csv",
+        )
+        export_ranking(
+            ranking_system.players, RANKING_RESULT_FOLDER / f"{category}_ranking.csv"
+        )
