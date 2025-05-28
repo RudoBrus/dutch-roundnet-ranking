@@ -10,7 +10,7 @@ from ranking_calculator.export import export_ranking, export_tournament_history
 from ranking_calculator.ranking_system import RankingSystem
 from ranking_calculator.read_tournament_data import (
     filter_tournaments_by_category,
-    load_relevant_tournaments,
+    get_recent_tournaments,
 )
 
 if __name__ == "__main__":
@@ -27,7 +27,7 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    tournaments = load_relevant_tournaments(
+    tournaments = get_recent_tournaments(
         TOURNAMENT_DATA_DIRECTORY,
         datetime.now(),
         max(months for months in AGE_MULTIPLIERS),

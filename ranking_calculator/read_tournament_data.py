@@ -25,7 +25,7 @@ def clean_name(name: str) -> str:
     return name_corrections.get(capitalized_name, capitalized_name)
 
 
-def read_tournament(tournament_file_path: Path) -> Tournament:
+def read_tournament_file(tournament_file_path: Path) -> Tournament:
     tournament_results = []
     with tournament_file_path.open("r") as file:
         reader = csv.reader(file)
@@ -43,7 +43,7 @@ def read_tournament(tournament_file_path: Path) -> Tournament:
     return Tournament(tournament_name, tournament_date, tournament_results)
 
 
-def load_relevant_tournaments(
+def get_recent_tournaments(
     tournament_record_folder: Path,
     current_date: datetime,
     maximum_age_in_months: int,
@@ -51,10 +51,10 @@ def load_relevant_tournaments(
     tournaments = []
     tournament_paths = tournament_record_folder.glob("*.csv")
     for path in tournament_paths:
-        tournament = read_tournament(path)
+        tournament = read_tournament_file(path)
         age_in_months = (current_date - tournament.date).days / 30.44
         if age_in_months <= maximum_age_in_months:
-            tournaments.append(read_tournament(path))
+            tournaments.append(read_tournament_file(path))
     return sorted(tournaments, key=lambda t: t.date)
 
 

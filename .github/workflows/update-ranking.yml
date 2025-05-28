@@ -32,7 +32,7 @@ jobs:
           pipenv install --dev
 
       - name: Run the ranking update script
-        run: pipenv run python -m ranking_calculator --categories women advanced intermediate beginner
+        run: pipenv run python -m ranking_calculator
 
       - name: Commit and push changes
         run: |
