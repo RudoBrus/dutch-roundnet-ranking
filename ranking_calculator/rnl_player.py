@@ -1,7 +1,7 @@
 # from types import Tuple
 from datetime import datetime
 
-from config import RULES
+from ranking_calculator.config import RULES
 
 
 class RNLPlayer:

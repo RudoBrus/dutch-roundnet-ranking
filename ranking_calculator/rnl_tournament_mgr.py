@@ -2,8 +2,9 @@ from datetime import datetime
 from pathlib import Path
 
 import pandas as pd
-from config import RANKING_RESULT_FOLDER
-from rnl_tournament import RNLTournament
+
+from ranking_calculator.config import RANKING_RESULT_FOLDER
+from ranking_calculator.rnl_tournament import RNLTournament
 
 
 class RNLTournamentMgr:

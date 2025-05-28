@@ -2,9 +2,10 @@ from datetime import datetime
 from pathlib import Path
 
 import pandas as pd
-from config import RANKING_RESULT_FOLDER
-from rnl_player_mgr import RNLPlayerMgr
-from rnl_tournament_mgr import RNLTournamentMgr
+
+from ranking_calculator.config import RANKING_RESULT_FOLDER
+from ranking_calculator.rnl_player_mgr import RNLPlayerMgr
+from ranking_calculator.rnl_tournament_mgr import RNLTournamentMgr
 
 
 def get_tournament_date(tournament_file: Path):

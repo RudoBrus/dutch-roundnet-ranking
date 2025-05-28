@@ -1,7 +1,8 @@
 from datetime import datetime
 
 import pandas as pd
-from config import RULES
+
+from ranking_calculator.config import RULES
 
 
 class RNLTournament:
@@ -33,8 +34,6 @@ class RNLTournament:
 
         self.map_tournament_points()
         self.level_multiplier = 1.0
-
-        pass
 
     def map_tournament_points(self):
         blank_points = {int(k): v for k, v in RULES["blank_points"].items()}

@@ -4,8 +4,9 @@ from datetime import datetime
 from pathlib import Path
 
 import pandas as pd
-from config import RANKING_RESULT_FOLDER
-from rnl_player import RNLPlayer
+
+from ranking_calculator.config import RANKING_RESULT_FOLDER
+from ranking_calculator.rnl_player import RNLPlayer
 
 
 class RNLPlayerMgr:

@@ -1,7 +1,11 @@
 import argparse
 
-from config import RANKING_RESULT_FOLDER, RULES, TOURNAMENT_RECORDS_FOLDER
-from rnl_ranking_system import RNLRankingSystem
+from ranking_calculator.config import (
+    RANKING_RESULT_FOLDER,
+    RULES,
+    TOURNAMENT_RECORDS_FOLDER,
+)
+from ranking_calculator.rnl_ranking_system import RNLRankingSystem
 
 
 def get_category_entries(selected_category: str) -> list[str]:
