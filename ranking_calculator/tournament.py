@@ -17,7 +17,7 @@ class Tournament:
     name: str
     date: datetime
     tournament_results: list[TournamentResult]
-    player_multiplier: float | None = None
+    player_multiplier: float = 1.0
     age_multiplier: float = 1.0
 
     def update_age_multiplier(self, calculation_date: datetime):

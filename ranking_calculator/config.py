@@ -13,7 +13,8 @@ RANKING_RESULT_FOLDER = Path(__file__).parent.parent / "rankings"
 MAX_COUNTING_TOURNAMENTS = 3
 
 # The base points awarded for a tournament based on team placement.
-# For example, the first place team both get 700 points, the 6th placed team both get 420 points.
+# For example, the first place team both get 700 points,
+# the 6th placed team both get 420 points.
 TOURNAMENT_BASE_POINTS = {
     1: 700,
     2: 630,
@@ -29,8 +30,10 @@ TOURNAMENT_BASE_POINTS = {
 }
 
 
-# High ranked players at a tournament increase the points awarded to all players at the tournament.
-# The multiplier is 0.1 for ranks 1-10, 0.06 for ranks 11-20, 0.03 for ranks 21-30, and 0.005 for ranks 31-50.
+# High ranked players at a tournament increase the points awarded to
+# all players at the tournament.
+# The multiplier is 0.1 for ranks 1-10, 0.06 for ranks 11-20,
+# 0.03 for ranks 21-30, and 0.005 for ranks 31-50.
 PLAYER_MULTIPLIERS = {
     rank: 0.1 if rank <= 10 else 0.06 if rank <= 20 else 0.03 if rank <= 30 else 0.005
     for rank in range(1, 51)

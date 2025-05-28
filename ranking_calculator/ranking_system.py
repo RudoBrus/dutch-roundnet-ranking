@@ -10,10 +10,10 @@ class RankingSystem:
     def __init__(self):
         self.players: list[Player] = []
         self.tournament_history: list[Tournament] = []
-        self.ranking_history: dict[datetime, list[Player]] = {}
+        self.ranking_history: dict[datetime, list[RankedPlayer]] = {}
 
     @property
-    def ranked_players(self) -> List[RankedPlayer]:
+    def ranked_players(self) -> list[RankedPlayer]:
         sorted_players = sorted(
             self.players, key=lambda player: player.ranking_points, reverse=True
         )
@@ -35,17 +35,20 @@ class RankingSystem:
         multiplier = 1.0
         for result in tournament.tournament_results:
             player_rank = ranked_players.get(result.player_name)
-            multiplier += PLAYER_MULTIPLIERS.get(player_rank, 0)
+            if player_rank:
+                multiplier += PLAYER_MULTIPLIERS.get(player_rank, 0.0)
         return multiplier
 
-    def update_player_placements(self, tournament: Tournament):
+    def get_or_create_player(self, player_name: str) -> Player:
+        player = next((p for p in self.players if p.name == player_name), None)
+        if player is None:
+            player = Player(name=player_name, tournament_placements=[])
+            self.players.append(player)
+        return player
+
+    def add_player_tournament_placements(self, tournament: Tournament):
         for result in tournament.tournament_results:
-            player = next(
-                (p for p in self.players if p.name == result.player_name), None
-            )
-            if player is None:
-                player = Player(name=result.player_name, tournament_placements=[])
-                self.players.append(player)
+            player = self.get_or_create_player(result.player_name)
             player.tournament_placements.append(
                 TournamentPlacements(tournament=tournament, rank=result.rank)
             )
@@ -58,7 +61,7 @@ class RankingSystem:
             tournament
         )
         # Then we update the player's placements with the tournament results
-        self.update_player_placements(tournament)
+        self.add_player_tournament_placements(tournament)
         self.tournament_history.append(tournament)
         # Finally, we store the ranking history
         self.ranking_history[tournament.date] = copy.deepcopy(self.ranked_players)

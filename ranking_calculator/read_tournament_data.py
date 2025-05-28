@@ -31,9 +31,11 @@ def read_tournament(tournament_file_path: Path) -> Tournament:
         reader = csv.reader(file)
         next(reader)
         for name, rank, category in reader:
+            if category not in ["women", "advanced", "intermediate", "beginner"]:
+                raise ValueError(f"Invalid category: {category}")
             cleaned_name = clean_name(name)
             tournament_results.append(
-                TournamentResult(cleaned_name, int(rank), category)
+                TournamentResult(cleaned_name, int(rank), category)  # type: ignore[arg-type]
             )
 
     tournament_date_str, tournament_name = tournament_file_path.stem.split("_")

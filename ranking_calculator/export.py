@@ -2,13 +2,11 @@ import csv
 from pathlib import Path
 
 from ranking_calculator.config import MAX_COUNTING_TOURNAMENTS
-from ranking_calculator.player import Player
+from ranking_calculator.player import RankedPlayer
 from ranking_calculator.tournament import Tournament
 
 
-def export_tournament_history(
-    category: str, tournament_history: list[Tournament], output_file: Path
-):
+def export_tournament_history(tournament_history: list[Tournament], output_file: Path):
     with output_file.open("w", newline="") as file:
         writer = csv.writer(file)
         writer.writerow(
@@ -34,7 +32,7 @@ def export_tournament_history(
             )
 
 
-def get_counting_tournaments(player: Player) -> list[str]:
+def get_counting_tournaments(player: RankedPlayer) -> list[str]:
     best_tournaments = sorted(
         player.tournament_placements,
         key=lambda placement: placement.points,
@@ -43,7 +41,8 @@ def get_counting_tournaments(player: Player) -> list[str]:
 
     tournament_details = [
         (
-            f"{placement.tournament.name} {placement.tournament.date.strftime('%Y-%m-%d')} - "
+            f"{placement.tournament.name} "
+            f"{placement.tournament.date.strftime('%Y-%m-%d')} - "
             f"Place: {placement.rank} Points: {round(placement.points, 2)}"
         )
         for placement in best_tournaments
@@ -55,7 +54,7 @@ def get_counting_tournaments(player: Player) -> list[str]:
     return tournament_details
 
 
-def export_ranking(players: list[Player], output_file: Path):
+def export_ranking(players: list[RankedPlayer], output_file: Path):
     sorted_players = sorted(players, key=lambda player: player.rank)
     with output_file.open("w", newline="") as file:
         writer = csv.writer(file)
