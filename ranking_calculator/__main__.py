@@ -1,10 +1,6 @@
 import argparse
 
-from ranking_calculator.config import (
-    RANKING_RESULT_FOLDER,
-    RULES,
-    TOURNAMENT_RECORDS_FOLDER,
-)
+from ranking_calculator.config import RULES, TOURNAMENT_RECORDS_FOLDER
 from ranking_calculator.rnl_ranking_system import RNLRankingSystem
 
 
@@ -32,8 +28,6 @@ if __name__ == "__main__":
         help="Optional test name to include in the ranking file name.",
     )
     args = parser.parse_args()
-
-    RANKING_RESULT_FOLDER.mkdir(parents=True, exist_ok=True)
     tournament_paths = sorted(TOURNAMENT_RECORDS_FOLDER.glob("*.csv"))
     for category in args.categories:
         print(f"Processing category: {category}")
