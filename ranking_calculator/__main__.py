@@ -3,10 +3,10 @@ from datetime import datetime
 
 from ranking_calculator.config import (
     AGE_MULTIPLIERS,
-    RANKING_RESULT_FOLDER,
+    CATEGORIES,
     TOURNAMENT_DATA_DIRECTORY,
 )
-from ranking_calculator.export import export_ranking, export_tournament_history
+from ranking_calculator.export import export
 from ranking_calculator.ranking_system import RankingSystem
 from ranking_calculator.read_tournament_data import (
     filter_tournaments_by_category,
@@ -21,8 +21,8 @@ if __name__ == "__main__":
         "--categories",
         nargs="+",
         type=str,
-        choices=["women", "advanced", "intermediate", "beginner"],
-        default=["women", "advanced", "intermediate", "beginner"],
+        choices=CATEGORIES,
+        default=CATEGORIES,
         help="List of categories to process.",
     )
     args = parser.parse_args()
@@ -38,11 +38,4 @@ if __name__ == "__main__":
         ranking_system = RankingSystem()
         for tournament in category_tournaments:
             ranking_system.update_ranking_with_tournament(tournament)
-        export_tournament_history(
-            ranking_system.tournament_history,
-            RANKING_RESULT_FOLDER / f"{category}_tournament_history.csv",
-        )
-        export_ranking(
-            ranking_system.ranked_players,
-            RANKING_RESULT_FOLDER / f"{category}_ranking.csv",
-        )
+        export(ranking_system, category)

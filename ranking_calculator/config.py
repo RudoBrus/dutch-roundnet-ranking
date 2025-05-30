@@ -6,6 +6,9 @@ TOURNAMENT_DATA_DIRECTORY = Path(__file__).parent / "tournament_data"
 # Where to safe the ranking results
 RANKING_RESULT_FOLDER = Path(__file__).parent.parent / "rankings"
 
+# Currently supported categories
+CATEGORIES = ["women", "advanced", "intermediate", "beginner"]
+
 
 # Rules for the ranking system
 
@@ -20,13 +23,13 @@ TOURNAMENT_BASE_POINTS = {
     2: 630,
     3: 560,
     4: 490,
-    **{rank: 420 for rank in range(5, 7)},
-    **{rank: 350 for rank in range(7, 9)},
-    **{rank: 280 for rank in range(9, 13)},
-    **{rank: 210 for rank in range(13, 17)},
-    **{rank: 140 for rank in range(17, 25)},
-    **{rank: 105 for rank in range(25, 33)},
-    **{rank: 70 for rank in range(33, 65)},
+    **dict.fromkeys(range(5, 7), 420),
+    **dict.fromkeys(range(7, 9), 350),
+    **dict.fromkeys(range(9, 13), 280),
+    **dict.fromkeys(range(13, 17), 210),
+    **dict.fromkeys(range(17, 25), 140),
+    **dict.fromkeys(range(25, 33), 105),
+    **dict.fromkeys(range(33, 65), 70),
 }
 
 

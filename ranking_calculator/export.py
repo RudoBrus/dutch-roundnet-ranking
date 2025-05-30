@@ -1,8 +1,11 @@
 import csv
+from datetime import datetime
 from pathlib import Path
+from typing import Literal
 
-from ranking_calculator.config import MAX_COUNTING_TOURNAMENTS
+from ranking_calculator.config import MAX_COUNTING_TOURNAMENTS, RANKING_RESULT_FOLDER
 from ranking_calculator.player import RankedPlayer
+from ranking_calculator.ranking_system import RankingSystem
 from ranking_calculator.tournament import Tournament
 
 
@@ -79,3 +82,21 @@ def export_ranking(players: list[RankedPlayer], output_file: Path):
                     *best_tournaments,
                 ]
             )
+
+
+def export(
+    ranking_system: RankingSystem,
+    category: Literal["women", "advanced", "intermediate", "beginner"],
+) -> None:
+    current_date = datetime.now().strftime("%Y-%m-%d")
+    export_folder = RANKING_RESULT_FOLDER / current_date
+    export_folder.mkdir(parents=True, exist_ok=True)
+
+    export_tournament_history(
+        ranking_system.tournament_history,
+        export_folder / f"{category}_tournament_history.csv",
+    )
+    export_ranking(
+        ranking_system.ranked_players,
+        export_folder / f"{category}_ranking.csv",
+    )
