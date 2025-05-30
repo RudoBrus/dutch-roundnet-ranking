@@ -1,9 +1,5 @@
-[packages]
-pandas = "*"
-
 [dev-packages]
 mypy = "*"
-pandas-stubs = "*"
 pylint = "*"
 pytest = "*"
 pytest-cov = "*"

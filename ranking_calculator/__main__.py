@@ -37,7 +37,7 @@ if __name__ == "__main__":
         category_tournaments = filter_tournaments_by_category(tournaments, category)
         ranking_system = RankingSystem()
         for tournament in category_tournaments:
-            ranking_system.add_tournament(tournament)
+            ranking_system.update_ranking_with_tournament(tournament)
         export_tournament_history(
             ranking_system.tournament_history,
             RANKING_RESULT_FOLDER / f"{category}_tournament_history.csv",
