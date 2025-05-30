@@ -1,8 +1,4 @@
-[packages]
-pandas = "*"
-
 [dev-packages]
-black = "~=23.0"
 mypy = "*"
 pylint = "*"
 pytest = "*"
