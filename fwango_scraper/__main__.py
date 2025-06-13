@@ -122,15 +122,20 @@ def save_tournament_data(date, tournament_data):
         writer.writerows(tournament_data)
 
 
-def scrape_fwango_tournaments(waittime=20, max_wait_time=1):
-    service = Service(
-        executable_path="/home/rens/miniconda3/envs/fwango/bin/geckodriver"
-    )
+def create_selenium_driver():
+    service = Service(executable_path="/usr/local/bin/geckodriver")
     options = Options()
     options.binary_location = "/usr/bin/firefox"
-    options.add_argument("-headless")
+    options.add_argument("--headless")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--disable-gpu")
+    options.add_argument("--incognito")
+    return webdriver.Firefox(service=service, options=options)
 
-    driver = webdriver.Firefox(service=service, options=options)
+
+def scrape_fwango_tournaments(waittime=20, max_wait_time=1):
+    driver = create_selenium_driver()
     inputfile = INPUT_DIRECTORY.joinpath("tournament_url.txt")
 
     with open(inputfile.absolute().as_posix()) as f:
