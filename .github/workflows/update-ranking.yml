@@ -31,6 +31,18 @@ jobs:
           pip install pipenv
           pipenv install --dev
 
+      - name: Install Firefox and GeckoDriver
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y firefox
+          GECKODRIVER_VERSION=$(curl -s https://api.github.com/repos/mozilla/geckodriver/releases/latest | jq -r .tag_name)
+          wget https://github.com/mozilla/geckodriver/releases/download/$GECKODRIVER_VERSION/geckodriver-v$GECKODRIVER_VERSION-linux64.tar.gz
+          tar -xvzf geckodriver-v$GECKODRIVER_VERSION-linux64.tar.gz
+          sudo mv geckodriver /usr/local/bin/
+
+      - name: Run the tournament scraper
+        run: pipenv run python -m fwango_scraper
+
       - name: Run the ranking update script
         run: pipenv run python -m ranking_calculator
 
