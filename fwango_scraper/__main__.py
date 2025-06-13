@@ -123,15 +123,21 @@ def save_tournament_data(date, tournament_data):
 
 
 def create_selenium_driver():
-    service = Service(executable_path="/usr/local/bin/geckodriver")
-    options = Options()
-    options.binary_location = "/usr/bin/firefox"
-    options.add_argument("--headless")
-    options.add_argument("--no-sandbox")
-    options.add_argument("--disable-dev-shm-usage")
-    options.add_argument("--disable-gpu")
-    options.add_argument("--incognito")
-    return webdriver.Firefox(service=service, options=options)
+    try:
+        service = Service(executable_path="/usr/local/bin/geckodriver")
+        options = Options()
+        options.binary_location = "/usr/bin/firefox"
+        options.add_argument("--headless")
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disable-dev-shm-usage")
+        options.add_argument("--disable-gpu")
+        options.add_argument("--incognito")
+        driver = webdriver.Firefox(service=service, options=options)
+        print("Firefox WebDriver started successfully.")
+        return driver
+    except Exception as e:
+        print(f"Error starting WebDriver: {e}")
+        raise
 
 
 def scrape_fwango_tournaments(waittime=20, max_wait_time=1):

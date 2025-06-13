@@ -40,6 +40,12 @@ jobs:
           tar -xvzf geckodriver-$GECKODRIVER_VERSION-linux64.tar.gz
           sudo mv geckodriver /usr/local/bin/
 
+      - name: Verify GeckoDriver installation
+        run: geckodriver --version
+
+      - name: Check system resources
+        run: free -h && df -h
+
       - name: Run the tournament scraper
         run: pipenv run python -m fwango_scraper
 
