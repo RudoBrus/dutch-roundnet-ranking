@@ -1,3 +1,6 @@
+[packages]
+selenium = "*"
+
 [dev-packages]
 mypy = "*"
 pylint = "*"
