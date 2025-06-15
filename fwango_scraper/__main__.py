@@ -154,13 +154,14 @@ def create_selenium_driver() -> webdriver.Chrome:
         raise
 
 
-def read_tournaments_csv() -> list[dict[str, str]]:
+def get_tournaments_to_scrape() -> list[dict[str, str]]:
     with open(INPUT_FILE.as_posix(), encoding="utf-8") as f:
         reader = csv.DictReader(f)
         return [
-            {"location": row["location"], "url": row["url"], "skip": row["skip"]}
+            {"location": row["location"], "url": row["url"]}
             for row in reader
-            if row["skip"].lower() == "false"
+            if row["already_scraped"].lower() == "false"
+            and row["results_published"].lower() == "true"
         ]
 
 
@@ -195,6 +196,6 @@ def scrape_tournaments(
 
 if __name__ == "__main__":
     selenium_driver = create_selenium_driver()
-    tournaments_info = read_tournaments_csv()
-    scrape_tournaments(selenium_driver, tournaments_info)
+    tournaments_to_scrape = get_tournaments_to_scrape()
+    scrape_tournaments(selenium_driver, tournaments_to_scrape)
     selenium_driver.quit()
