@@ -141,7 +141,7 @@ def create_selenium_driver():
         raise
 
 
-def scrape_fwango_tournaments(waittime=20, max_wait_time=1):
+def scrape_fwango_tournaments(waittime=20):
     driver = create_selenium_driver()
     inputfile = INPUT_DIRECTORY.joinpath("tournament_urls.csv")
 
