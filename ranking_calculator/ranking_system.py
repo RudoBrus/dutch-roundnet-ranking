@@ -41,7 +41,7 @@ class RankingSystem:
                 multiplier += PLAYER_MULTIPLIERS.get(player_rank, 0.0)
         return multiplier
 
-    def update_ranking_with_tournament(self, tournament: Tournament):
+    def update_ranking_with_tournament(self, tournament: Tournament) -> None:
         # First we update the tournament's age multiplier
         self.update_age_multipliers(tournament.date)
         # Then we calculate the player multiplier for the tournament

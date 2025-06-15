@@ -9,7 +9,9 @@ from ranking_calculator.ranking_system import RankingSystem
 from ranking_calculator.tournament import Tournament
 
 
-def export_tournament_history(tournament_history: list[Tournament], output_file: Path):
+def export_tournament_history(
+    tournament_history: list[Tournament], output_file: Path
+) -> None:
     with output_file.open("w", newline="") as file:
         writer = csv.writer(file)
         writer.writerow(
@@ -57,7 +59,7 @@ def get_counting_tournaments(player: RankedPlayer) -> list[str]:
     return tournament_details
 
 
-def export_ranking(players: list[RankedPlayer], output_file: Path):
+def export_ranking(players: list[RankedPlayer], output_file: Path) -> None:
     sorted_players = sorted(players, key=lambda player: player.rank)
     with output_file.open("w", newline="") as file:
         writer = csv.writer(file)

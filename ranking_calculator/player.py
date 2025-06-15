@@ -45,7 +45,7 @@ class PlayerList:
             self.players.append(player)
         return player
 
-    def update_playerlist_from_tournament(self, tournament: Tournament):
+    def update_playerlist_from_tournament(self, tournament: Tournament) -> None:
         for result in tournament.tournament_results:
             player = self.get_or_create_player(result.player_name)
             player.tournament_placements.append(
