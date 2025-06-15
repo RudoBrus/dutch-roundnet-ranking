@@ -1,52 +1,46 @@
+import csv
 import re
 from datetime import datetime
 from pathlib import Path
 
-import pandas as pd
 from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
-from selenium.webdriver.firefox.options import Options
-from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
-INPUT_DIRECTORY = Path(__file__).parent
+INPUT_FILE = Path(__file__).parent / "tournaments.csv"
 OUTPUT_DIRECTORY = Path(__file__).parent.parent.joinpath(
     "ranking_calculator/tournament_data"
 )
 
 
-def extract_date(driver):
-    # Find date element
+def extract_date(driver: webdriver.Chrome) -> datetime | None:
     date_element = driver.find_elements(By.CLASS_NAME, "date")
-
-    if date_element is not None:
+    if date_element:
         for element in date_element:
-            # Convert to datetime format
             cleaned_date = re.sub(r"(\d+)(st|nd|rd|th)", r"\1", element.text)
-            date = datetime.strptime(cleaned_date, "%B %d, %Y")
-            return date
-    else:
-        print("No date element found, the tournament is probably in the future!")
-        return None
+            return datetime.strptime(cleaned_date, "%B %d, %Y")
+    print("No date element found, the tournament is probably in the future!")
+    return None
 
 
-def open_dropdown(driver):
+def open_dropdown(driver: webdriver.Chrome) -> None:
     try:
         divisions_dropdown = driver.find_element(
             By.CLASS_NAME, "select-input-container"
         )
         divisions_dropdown.click()
-        # print("Opened dropdown succesfully")
-    except:
-        print("Couldn't open dropdown menu")
-
-    return
+    except NoSuchElementException as e:
+        print(f"Dropdown element not found: {e}")
 
 
-def find_teams_in_division(driver, max_wait_time=20):
+def find_teams_in_division(
+    driver: webdriver.Chrome, max_wait_time: int = 20
+) -> list[dict[str, str]]:
     try:
-        # print('Start search')
         player_elements = WebDriverWait(driver, max_wait_time).until(
             EC.presence_of_all_elements_located((By.CLASS_NAME, "players"))
         )
@@ -54,57 +48,45 @@ def find_teams_in_division(driver, max_wait_time=20):
             EC.presence_of_all_elements_located((By.CLASS_NAME, "title"))
         )
 
-        published = False
-        for tit in rankings_published:
-            if "Final" in tit.text:
-                published = True
-            elif "Results" in tit.text:
-                print(
-                    f"Results of tournament are not yet published! Tournament: {str(driver.current_url)}\n"
-                )
-                return None
-
+        published = any("Final" in tit.text for tit in rankings_published)
         if not published:
             print(
-                f"Results of tournament are not yet published! Tournament: {str(driver.current_url)}\n"
+                f"Results of tournament are not yet published! "
+                f"Tournament: {driver.current_url}"
             )
-            return None
+            return []
 
         if player_elements:
             players_in_division = []
             for rank, players in enumerate(player_elements):
                 player1, player2 = players.text.split(" and ")
-                players_in_division.append([player1.title(), rank + 1])
-                players_in_division.append([player2.title(), rank + 1])
-                # print(rank+1, player1, player2)
-
-            if len(players_in_division) > 0:
-                return pd.DataFrame(players_in_division, columns=["name", "rank"])
-            return None
+                players_in_division.append(
+                    {"name": player1.title(), "rank": str(rank + 1)}
+                )
+                players_in_division.append(
+                    {"name": player2.title(), "rank": str(rank + 1)}
+                )
+            return players_in_division
         print("No players found")
-        return None
-    except:
-        print("Empty division\n")
-        return None
-
-    message_elements = driver.find_elements(By.CLASS_NAME, "message")
-    for message in message_elements:
-        print(message.text)
+        return []
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        print(f"Empty division\nError: {e}")
+        return []
 
 
-def find_divisions(driver, waittime=20):
-    driver.implicitly_wait(waittime)
+def find_divisions(driver: webdriver.Chrome) -> dict[str, str]:
+    open_dropdown(driver)
     divisions = driver.find_elements(
         By.XPATH, "//*[contains(@id, 'react-select') and contains(@id, '-option-')]"
     )
+    return {
+        div_id: div.text
+        for div in divisions
+        if (div_id := div.get_attribute("id")) is not None
+    }
 
-    division_ids = [div.get_attribute("id") for div in divisions]
-    division_names = [div.text for div in divisions]
 
-    return division_ids, division_names
-
-
-def select_division(division_name):
+def select_division(division_name: str) -> str:
     if "womens" in division_name.lower():
         return "women"
     if "advanced" in division_name.lower():
@@ -116,116 +98,104 @@ def select_division(division_name):
     return "advanced"
 
 
-def create_tournament_dataframe(driver, division_ids, waittime=20):
+def create_tournament_data(driver: webdriver.Chrome) -> list[dict[str, str]] | None:
+    divisions = find_divisions(driver)
     all_players = []
-    for div_id in division_ids:
-        div = driver.find_element(By.ID, div_id)
-        text = div.text
-        print(f"Scraping division: {text}\n")
+    for division_id, division_name in divisions.items():
+        print(f"Scraping division: {division_name}\n")
+        div = driver.find_element(By.ID, division_id)
         div.click()
-        driver.implicitly_wait(waittime)
 
         teams = find_teams_in_division(driver)
-
-        if teams is not None:
-            teams["category"] = select_division(text)
-
-            all_players.append(teams)
+        if teams:
+            division = select_division(division_name)
+            for team in teams:
+                team["category"] = division
+            all_players.extend(teams)
 
         open_dropdown(driver)
-    if all_players:
-        return pd.concat(all_players)
-    print(
-        "Something went wrong collecting the ranked data, probably none of the divisions have published results."
-    )
-    return None
+    return all_players if all_players else None
 
 
-def save_tournament_dataframe(date, tournament_dataframe):
+def save_tournament_data(
+    tournament_date: datetime,
+    tournament_name: str,
+    tournament_data: list[dict[str, str]],
+) -> None:
     filename = (
-        OUTPUT_DIRECTORY.joinpath(f"{date.strftime('%Y-%m-%d')}.csv")
+        OUTPUT_DIRECTORY.joinpath(
+            f"{tournament_date.strftime('%Y-%m-%d')}_{tournament_name}.csv"
+        )
         .absolute()
         .as_posix()
     )
     print("Saving file in: ", filename)
-    tournament_dataframe.to_csv(filename, index=False)
+    with open(filename, mode="w", newline="", encoding="utf-8") as file:
+        writer = csv.DictWriter(file, fieldnames=["name", "rank", "category"])
+        writer.writeheader()
+        writer.writerows(tournament_data)
 
 
-def scrape_fwango_tournaments(waittime=20, max_wait_time=1):
-    # Set up Geckodriver service
-    service = Service(
-        executable_path="/home/rens/miniconda3/envs/fwango/bin/geckodriver"
-    )  # Update with the correct path
+def create_selenium_driver() -> webdriver.Chrome:
+    try:
+        service = Service(executable_path="/usr/local/bin/chromedriver")
+        options = Options()
+        options.add_argument("--headless")
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disable-dev-shm-usage")
+        options.add_argument("--disable-gpu")
+        options.add_argument("--incognito")
+        driver = webdriver.Chrome(service=service, options=options)
+        driver.implicitly_wait(20)  # Set implicit wait time for elements to load
+        print("Chrome WebDriver started successfully.")
+        return driver
+    except Exception as e:
+        print(f"Error starting WebDriver: {e}")
+        raise
 
-    # Set Firefox options
-    options = Options()
-    options.binary_location = "/usr/bin/firefox"  # Update if needed
-    options.add_argument("-headless")  # Optional: Run in headless mode
 
-    # Initialize WebDriver
-    driver = webdriver.Firefox(service=service, options=options)
+def get_tournaments_to_scrape() -> list[dict[str, str]]:
+    with open(INPUT_FILE.as_posix(), encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        return [
+            {"location": row["location"], "url": row["url"]}
+            for row in reader
+            if row["already_scraped"].lower() == "false"
+            and row["results_published"].lower() == "true"
+        ]
 
-    # Read which fwango url's are requested
-    inputfile = INPUT_DIRECTORY.joinpath("tournament_url.txt")
 
-    with open(inputfile.absolute().as_posix()) as f:
-        urls = [line.rstrip() for line in f]
+def scrape_tournaments(
+    driver: webdriver.Chrome, tournaments: list[dict[str, str]]
+) -> None:
+    for tournament in tournaments:
+        print("\n" + "*" * 75 + "\n")
+        print(f"Start scraping of: {tournament['url']}\n")
 
-    # Loop through all requested urls
-    for url in urls:
-        print("\n")
-        print("*" * 75)
-        print("\n")
-        print(f"Start scraping of: {url}\n")
-
-        # Check for corrupt links and skips
-        if "fwango" not in url:
-            print(f"Skipping line containing '{url}', because it is not a fwango url!")
-            continue
-        if "skip" in url[0:4]:
-            print(f"Skipping line containing '{url}'")
-            continue
-
-        # Open the fwango page
         try:
-            driver.get(url)
-        except:
-            print(f"Couldn't open this url: {url}")
+            driver.get(tournament["url"])
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            print(f"Couldn't open this url: {tournament['url']}, error: {e}")
             continue
 
-        # Wait for elements to load
-        driver.implicitly_wait(waittime)
-
-        # Find tournament date
         date = extract_date(driver)
-        if date is None:
-            continue
-        if date > datetime.today():
+        if not date or date > datetime.today():
             print("Tournament is in the future!")
             print("Tournament date: ", date)
             continue
         print("Tournament date: ", date, "\n")
 
-        # Open the results page
-        results_url = f"{url}/results"
+        results_url = f"{tournament['url']}/results"
         driver.get(results_url)
-        driver.implicitly_wait(waittime)
 
-        # Find divisions
-        open_dropdown(driver)
-        division_ids, division_names = find_divisions(driver)
-
-        # Scrape player rankings from all divisions
-        all_player_rankings = create_tournament_dataframe(driver, division_ids)
-        if all_player_rankings is not None:
+        all_player_rankings = create_tournament_data(driver)
+        if all_player_rankings:
             print(all_player_rankings)
-
-            # Save tournament ranking if it is available
-            save_tournament_dataframe(date, all_player_rankings)
-
-    # Close browser
-    driver.quit()
+            save_tournament_data(date, tournament["location"], all_player_rankings)
 
 
 if __name__ == "__main__":
-    scrape_fwango_tournaments()
+    selenium_driver = create_selenium_driver()
+    tournaments_to_scrape = get_tournaments_to_scrape()
+    scrape_tournaments(selenium_driver, tournaments_to_scrape)
+    selenium_driver.quit()

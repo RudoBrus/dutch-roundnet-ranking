@@ -24,7 +24,7 @@ class Tournament:
     def id(self) -> str:
         return f"{self.name}_{self.date.strftime('%Y-%m-%d')}"
 
-    def update_age_multiplier(self, calculation_date: datetime):
+    def update_age_multiplier(self, calculation_date: datetime) -> None:
         age_in_months = int((calculation_date - self.date).days / 30.44)
         self.age_multiplier = AGE_MULTIPLIERS.get(age_in_months, 0)
 

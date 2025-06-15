@@ -31,6 +31,26 @@ jobs:
           pip install pipenv
           pipenv install --dev
 
+      - name: Install Chrome
+        run: |
+          wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+          sudo mkdir -p /etc/apt/sources.list.d
+          sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
+          sudo apt-get update
+          sudo apt-get -y install google-chrome-stable=137.0.7151.103-1
+
+      - name: Install ChromeDriver
+        run: |
+          CHROMEDRIVER_VERSION="137.0.7151.103"
+          echo "Installing ChromeDriver version: $CHROMEDRIVER_VERSION"
+          wget -q "https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/$CHROMEDRIVER_VERSION/linux64/chromedriver-linux64.zip"
+          unzip chromedriver-linux64.zip
+          chmod +x chromedriver-linux64/chromedriver
+          sudo mv chromedriver-linux64/chromedriver /usr/local/bin/
+
+      - name: Run the tournament scraper
+        run: pipenv run python -m fwango_scraper
+
       - name: Run the ranking update script
         run: pipenv run python -m ranking_calculator
 
@@ -38,6 +58,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add .
+          git add ranking_calculator/tournament_data/*.csv
+          git add rankings/**/*.csv
           git commit -m "Updated ranking"
           git push

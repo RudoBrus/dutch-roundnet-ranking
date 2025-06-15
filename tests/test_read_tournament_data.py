@@ -1,4 +1,5 @@
 from datetime import datetime
+from pathlib import Path
 
 from ranking_calculator.read_tournament_data import (
     filter_tournaments_by_category,
@@ -8,7 +9,7 @@ from ranking_calculator.read_tournament_data import (
 from ranking_calculator.tournament import Tournament, TournamentResult
 
 
-def test_read_tournament_file(tmp_path):
+def test_read_tournament_file(tmp_path: Path) -> None:
     tournament_file = tmp_path / "2023-01-01_Test.csv"
     with tournament_file.open("w") as f:
         f.write("player_name,rank,category\n")
@@ -28,7 +29,7 @@ def test_read_tournament_file(tmp_path):
     assert tournament.tournament_results[1].category == "beginner"
 
 
-def test_get_recent_tournaments(tmp_path):
+def test_get_recent_tournaments(tmp_path: Path) -> None:
     tournament_1 = tmp_path / "2020-01-01_Tournament1.csv"
     tournament_2 = tmp_path / "2022-01-01_Tournament2.csv"
     tournament_3 = tmp_path / "2023-01-01_Tournament3.csv"
@@ -48,7 +49,7 @@ def test_get_recent_tournaments(tmp_path):
     assert tournaments[0].date < tournaments[1].date
 
 
-def test_filter_tournaments_by_category():
+def test_filter_tournaments_by_category() -> None:
     tournaments = [
         Tournament(
             name="Tournament1",
