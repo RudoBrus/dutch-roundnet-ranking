@@ -51,9 +51,6 @@ jobs:
       - name: Run the tournament scraper
         run: pipenv run python -m fwango_scraper
 
-      - name: Run the ranking update script
-        run: pipenv run python -m ranking_calculator
-
       - name: Commit and push changes
         run: |
           git config user.name "github-actions[bot]"

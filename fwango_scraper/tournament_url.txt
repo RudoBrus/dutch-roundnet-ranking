@@ -9,7 +9,10 @@ skip https://fwango.io/enschdegrandslam
 skip https://fwango.io/grandslamgroningen
 skip https://fwango.io/amsterdam-grand-slam
 skip https://fwango.io/nkroundnet2024
-https://fwango.io/rnlindoorgrandslamenschede2425
-https://fwango.io/rnlindoorgrandslamgroningen2425
-https://fwango.io/roundnet-amsterdam-grandslam
-https://fwango.io/enschede-grandslam-2025
+skip https://fwango.io/rnlindoorgrandslamenschede2425
+skip https://fwango.io/rnlindoorgrandslamgroningen2425
+skip https://fwango.io/roundnet-amsterdam-grandslam
+skip https://fwango.io/indoorutrecht
+https://fwango.io/groningenoutdoor2025
+skip not published https://fwango.io/enschede-grandslam-2025
+skip not published https://fwango.io/grandslam-amsterdam-open
