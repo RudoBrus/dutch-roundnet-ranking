@@ -4,19 +4,20 @@ from datetime import datetime
 from pathlib import Path
 
 from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
-INPUT_DIRECTORY = Path(__file__).parent
+INPUT_FILE = Path(__file__).parent / "tournaments.csv"
 OUTPUT_DIRECTORY = Path(__file__).parent.parent.joinpath(
     "ranking_calculator/tournament_data"
 )
 
 
-def extract_date(driver):
+def extract_date(driver: webdriver.Chrome) -> datetime | None:
     date_element = driver.find_elements(By.CLASS_NAME, "date")
     if date_element:
         for element in date_element:
@@ -27,17 +28,19 @@ def extract_date(driver):
     return None
 
 
-def open_dropdown(driver):
+def open_dropdown(driver: webdriver.Chrome) -> None:
     try:
         divisions_dropdown = driver.find_element(
             By.CLASS_NAME, "select-input-container"
         )
         divisions_dropdown.click()
-    except:
-        print("Couldn't open dropdown menu")
+    except NoSuchElementException as e:
+        print(f"Dropdown element not found: {e}")
 
 
-def find_teams_in_division(driver, max_wait_time=20):
+def find_teams_in_division(
+    driver: webdriver.Chrome, max_wait_time: int = 20
+) -> list[dict[str, str]] | None:
     try:
         player_elements = WebDriverWait(driver, max_wait_time).until(
             EC.presence_of_all_elements_located((By.CLASS_NAME, "players"))
@@ -57,27 +60,33 @@ def find_teams_in_division(driver, max_wait_time=20):
             players_in_division = []
             for rank, players in enumerate(player_elements):
                 player1, player2 = players.text.split(" and ")
-                players_in_division.append({"name": player1.title(), "rank": rank + 1})
-                players_in_division.append({"name": player2.title(), "rank": rank + 1})
+                players_in_division.append(
+                    {"name": player1.title(), "rank": str(rank + 1)}
+                )
+                players_in_division.append(
+                    {"name": player2.title(), "rank": str(rank + 1)}
+                )
             return players_in_division if players_in_division else None
         print("No players found")
         return None
-    except:
-        print("Empty division\n")
+    except Exception as e:
+        print(f"Empty division\nError: {e}")
         return None
 
 
-def find_divisions(driver, waittime=20):
-    driver.implicitly_wait(waittime)
+def find_divisions(driver: webdriver.Chrome) -> dict[str, str]:
+    open_dropdown(driver)
     divisions = driver.find_elements(
         By.XPATH, "//*[contains(@id, 'react-select') and contains(@id, '-option-')]"
     )
-    division_ids = [div.get_attribute("id") for div in divisions]
-    division_names = [div.text for div in divisions]
-    return division_ids, division_names
+    return {
+        div_id: div.text
+        for div in divisions
+        if (div_id := div.get_attribute("id")) is not None
+    }
 
 
-def select_division(division_name):
+def select_division(division_name: str) -> str:
     if "womens" in division_name.lower():
         return "women"
     if "advanced" in division_name.lower():
@@ -89,18 +98,17 @@ def select_division(division_name):
     return "advanced"
 
 
-def create_tournament_data(driver, division_ids, waittime=20):
+def create_tournament_data(driver: webdriver.Chrome) -> list[dict[str, str]] | None:
+    divisions = find_divisions(driver)
     all_players = []
-    for div_id in division_ids:
-        div = driver.find_element(By.ID, div_id)
-        text = div.text
-        print(f"Scraping division: {text}\n")
+    for division_id, division_name in divisions.items():
+        print(f"Scraping division: {division_name}\n")
+        div = driver.find_element(By.ID, division_id)
         div.click()
-        driver.implicitly_wait(waittime)
 
         teams = find_teams_in_division(driver)
         if teams:
-            division = select_division(text)
+            division = select_division(division_name)
             for team in teams:
                 team["category"] = division
             all_players.extend(teams)
@@ -109,7 +117,11 @@ def create_tournament_data(driver, division_ids, waittime=20):
     return all_players if all_players else None
 
 
-def save_tournament_data(tournament_date, tournament_name, tournament_data):
+def save_tournament_data(
+    tournament_date: datetime,
+    tournament_name: str,
+    tournament_data: list[dict[str, str]],
+) -> None:
     filename = (
         OUTPUT_DIRECTORY.joinpath(
             f"{tournament_date.strftime('%Y-%m-%d')}_{tournament_name}.csv"
@@ -118,13 +130,13 @@ def save_tournament_data(tournament_date, tournament_name, tournament_data):
         .as_posix()
     )
     print("Saving file in: ", filename)
-    with open(filename, mode="w", newline="") as file:
+    with open(filename, mode="w", newline="", encoding="utf-8") as file:
         writer = csv.DictWriter(file, fieldnames=["name", "rank", "category"])
         writer.writeheader()
         writer.writerows(tournament_data)
 
 
-def create_selenium_driver():
+def create_selenium_driver() -> webdriver.Chrome:
     try:
         service = Service(executable_path="/usr/local/bin/chromedriver")
         options = Options()
@@ -134,6 +146,7 @@ def create_selenium_driver():
         options.add_argument("--disable-gpu")
         options.add_argument("--incognito")
         driver = webdriver.Chrome(service=service, options=options)
+        driver.implicitly_wait(20)  # Set implicit wait time for elements to load
         print("Chrome WebDriver started successfully.")
         return driver
     except Exception as e:
@@ -141,30 +154,29 @@ def create_selenium_driver():
         raise
 
 
-def scrape_fwango_tournaments(waittime=20):
-    driver = create_selenium_driver()
-    inputfile = INPUT_DIRECTORY.joinpath("tournament_urls.csv")
-
-    with open(inputfile.absolute().as_posix()) as f:
+def read_tournaments_csv() -> list[dict[str, str]]:
+    with open(INPUT_FILE.as_posix(), encoding="utf-8") as f:
         reader = csv.DictReader(f)
         tournaments = [
             {"location": row["location"], "url": row["url"], "skip": row["skip"]}
             for row in reader
-            if "fwango" in row["url"] and row["skip"].lower() != "false"
+            if row["skip"].lower() == "false"
         ]
+    return tournaments
 
+
+def scrape_tournaments(tournaments: list[dict[str, str]]) -> None:
     for tournament in tournaments:
         print("\n" + "*" * 75 + "\n")
         print(f"Start scraping of: {tournament['url']}\n")
 
         try:
-            driver.get(tournament["url"])
+            selenium_driver.get(tournament["url"])
         except:
             print(f"Couldn't open this url: {tournament['url']}")
             continue
 
-        driver.implicitly_wait(waittime)
-        date = extract_date(driver)
+        date = extract_date(selenium_driver)
         if not date or date > datetime.today():
             print("Tournament is in the future!")
             print("Tournament date: ", date)
@@ -172,18 +184,16 @@ def scrape_fwango_tournaments(waittime=20):
         print("Tournament date: ", date, "\n")
 
         results_url = f"{tournament['url']}/results"
-        driver.get(results_url)
-        driver.implicitly_wait(waittime)
+        selenium_driver.get(results_url)
 
-        open_dropdown(driver)
-        division_ids, division_names = find_divisions(driver)
-        all_player_rankings = create_tournament_data(driver, division_ids)
+        all_player_rankings = create_tournament_data(selenium_driver)
         if all_player_rankings:
             print(all_player_rankings)
             save_tournament_data(date, tournament["location"], all_player_rankings)
 
-    driver.quit()
-
 
 if __name__ == "__main__":
-    scrape_fwango_tournaments()
+    selenium_driver = create_selenium_driver()
+    tournaments_info = read_tournaments_csv()
+    scrape_tournaments(tournaments_info)
+    selenium_driver.quit()
