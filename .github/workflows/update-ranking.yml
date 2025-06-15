@@ -31,10 +31,13 @@ jobs:
           pip install pipenv
           pipenv install --dev
 
-      - name: Install Firefox and GeckoDriver
+      - name: Install firefox
+        uses: browser-actions/setup-firefox@v1
+        with:
+          firefox-version: latest-ecr
+
+      - name: Install GeckoDriver
         run: |
-          sudo apt-get update
-          sudo apt-get install -y firefox-esr
           GECKODRIVER_VERSION=$(curl -s https://api.github.com/repos/mozilla/geckodriver/releases/latest | jq -r .tag_name)
           wget https://github.com/mozilla/geckodriver/releases/download/$GECKODRIVER_VERSION/geckodriver-$GECKODRIVER_VERSION-linux64.tar.gz
           tar -xvzf geckodriver-$GECKODRIVER_VERSION-linux64.tar.gz
