@@ -55,6 +55,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add .
+          git add ranking_calculator/tournament_data/*.csv
+          git add rankings/**/*.csv
           git commit -m "Updated ranking"
           git push

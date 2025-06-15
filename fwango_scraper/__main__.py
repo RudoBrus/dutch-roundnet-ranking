@@ -109,9 +109,11 @@ def create_tournament_data(driver, division_ids, waittime=20):
     return all_players if all_players else None
 
 
-def save_tournament_data(date, tournament_data):
+def save_tournament_data(tournament_date, tournament_name, tournament_data):
     filename = (
-        OUTPUT_DIRECTORY.joinpath(f"{date.strftime('%Y-%m-%d')}.csv")
+        OUTPUT_DIRECTORY.joinpath(
+            f"{tournament_date.strftime('%Y-%m-%d')}_{tournament_name}.csv"
+        )
         .absolute()
         .as_posix()
     )
@@ -141,23 +143,24 @@ def create_selenium_driver():
 
 def scrape_fwango_tournaments(waittime=20, max_wait_time=1):
     driver = create_selenium_driver()
-    inputfile = INPUT_DIRECTORY.joinpath("tournament_url.txt")
+    inputfile = INPUT_DIRECTORY.joinpath("tournament_urls.csv")
 
     with open(inputfile.absolute().as_posix()) as f:
-        urls = [line.rstrip() for line in f]
+        reader = csv.DictReader(f)
+        tournaments = [
+            {"location": row["location"], "url": row["url"], "skip": row["skip"]}
+            for row in reader
+            if "fwango" in row["url"] and row["skip"].lower() != "false"
+        ]
 
-    for url in urls:
+    for tournament in tournaments:
         print("\n" + "*" * 75 + "\n")
-        print(f"Start scraping of: {url}\n")
-
-        if "fwango" not in url or "skip" in url[:4]:
-            print(f"Skipping line containing '{url}'")
-            continue
+        print(f"Start scraping of: {tournament['url']}\n")
 
         try:
-            driver.get(url)
+            driver.get(tournament["url"])
         except:
-            print(f"Couldn't open this url: {url}")
+            print(f"Couldn't open this url: {tournament['url']}")
             continue
 
         driver.implicitly_wait(waittime)
@@ -168,7 +171,7 @@ def scrape_fwango_tournaments(waittime=20, max_wait_time=1):
             continue
         print("Tournament date: ", date, "\n")
 
-        results_url = f"{url}/results"
+        results_url = f"{tournament['url']}/results"
         driver.get(results_url)
         driver.implicitly_wait(waittime)
 
@@ -177,7 +180,7 @@ def scrape_fwango_tournaments(waittime=20, max_wait_time=1):
         all_player_rankings = create_tournament_data(driver, division_ids)
         if all_player_rankings:
             print(all_player_rankings)
-            save_tournament_data(date, all_player_rankings)
+            save_tournament_data(date, tournament["location"], all_player_rankings)
 
     driver.quit()
 
