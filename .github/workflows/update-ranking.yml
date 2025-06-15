@@ -31,23 +31,22 @@ jobs:
           pip install pipenv
           pipenv install --dev
 
-      - name: Install firefox
-        uses: browser-actions/setup-firefox@v1
-        with:
-          firefox-version: latest-ecr
-
-      - name: Install GeckoDriver
+      - name: Install Chrome
         run: |
-          GECKODRIVER_VERSION=$(curl -s https://api.github.com/repos/mozilla/geckodriver/releases/latest | jq -r .tag_name)
-          wget https://github.com/mozilla/geckodriver/releases/download/$GECKODRIVER_VERSION/geckodriver-$GECKODRIVER_VERSION-linux64.tar.gz
-          tar -xvzf geckodriver-$GECKODRIVER_VERSION-linux64.tar.gz
-          sudo mv geckodriver /usr/local/bin/
+          wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+          sudo mkdir -p /etc/apt/sources.list.d
+          sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
+          sudo apt-get update
+          sudo apt-get -y install google-chrome-stable
 
-      - name: Verify GeckoDriver installation
-        run: geckodriver --version
-
-      - name: Check system resources
-        run: free -h && df -h
+      - name: Install ChromeDriver
+        run: |
+          CHROMEDRIVER_VERSION="132.0.6834.83"
+          echo "Installing ChromeDriver version: $CHROMEDRIVER_VERSION"
+          wget -q "https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/$CHROMEDRIVER_VERSION/linux64/chromedriver-linux64.zip"
+          unzip chromedriver-linux64.zip
+          chmod +x chromedriver-linux64/chromedriver
+          sudo mv chromedriver-linux64/chromedriver /usr/local/bin/
 
       - name: Run the tournament scraper
         run: pipenv run python -m fwango_scraper
