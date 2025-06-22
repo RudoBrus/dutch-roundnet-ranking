@@ -1,8 +1,8 @@
 Player Name,Rank,Ranking Points,Best tournament,Second best tournament,Third best tournament
 Aleksandrs Juška,1,3800,NK 2024-06-29 - Place: 1 Points: 1585.5,Enschede 2024-04-06 - Place: 1 Points: 1159.2,Groningen 2024-02-11 - Place: 1 Points: 1055.6
 Lauma Ernestsone,2,3617,NK 2024-06-29 - Place: 1 Points: 1585.5,Enschede 2025-06-01 - Place: 2 Points: 1102.5,EnschedeIndoor 2024-11-30 - Place: 2 Points: 929.25
-Jarec Schouten,3,3484,NK 2024-06-29 - Place: 3 Points: 1268.4,Enschede 2024-04-06 - Place: 1 Points: 1159.2,Amsterdam 2023-06-17 - Place: 1 Points: 1056.3
-Rudo Brus,4,3460,NK 2024-06-29 - Place: 2 Points: 1426.95,Amsterdam 2025-06-14 - Place: 1 Points: 1053.5,Enschede 2025-06-01 - Place: 3 Points: 980.0
+Jarec Schouten,3,3530,NK 2024-06-29 - Place: 3 Points: 1268.4,Enschede 2024-04-06 - Place: 1 Points: 1159.2,Amsterdam 2025-06-14 - Place: 1 Points: 1102.5
+Rudo Brus,4,3509,NK 2024-06-29 - Place: 2 Points: 1426.95,Amsterdam 2025-06-14 - Place: 1 Points: 1102.5,Enschede 2025-06-01 - Place: 3 Points: 980.0
 Stan van Manen,5,3157,NK 2024-06-29 - Place: 3 Points: 1268.4,Groningen 2024-05-04 - Place: 1 Points: 1044.4,Groningen 2024-02-11 - Place: 3 Points: 844.48
 Jeroen Brus,6,2988,NK 2024-06-29 - Place: 2 Points: 1426.95,Enschede 2024-04-06 - Place: 3 Points: 927.36,Amsterdam 2023-06-17 - Place: 6 Points: 633.78
 Tomer Kedar,7,2983,Enschede 2025-06-01 - Place: 2 Points: 1102.5,NK 2024-06-29 - Place: 6 Points: 951.3,EnschedeIndoor 2024-11-30 - Place: 2 Points: 929.25
@@ -11,38 +11,38 @@ Micha Daling,9,2723,Groningen 2024-02-11 - Place: 2 Points: 950.04,Groningen 202
 Simon Spengler,10,2691,Groningen 2024-05-04 - Place: 1 Points: 1044.4,NK 2024-06-29 - Place: 5 Points: 951.3,Enschede 2024-04-06 - Place: 6 Points: 695.52
 Tim Teunis,11,2675,NK 2024-06-29 - Place: 4 Points: 1109.85,EnschedeIndoor 2024-11-30 - Place: 3 Points: 826.0,Groningen 2024-02-11 - Place: 4 Points: 738.92
 Ravi Kandula,12,2635,Amsterdam 2023-06-17 - Place: 1 Points: 1056.3,NK 2023-09-02 - Place: 1 Points: 896.7,Enschede 2023-11-26 - Place: 2 Points: 682.29
-Jasper Toebes,13,2498,Amsterdam 2025-06-14 - Place: 1 Points: 1053.5,Groningen 2025-05-03 - Place: 1 Points: 906.5,NK 2023-09-02 - Place: 6 Points: 538.02
-Ward Nieboer,14,2440,Groningen 2024-05-04 - Place: 3 Points: 835.52,Enschede 2024-04-06 - Place: 4 Points: 811.44,NK 2024-06-29 - Place: 8 Points: 792.75
-Sam Beard,15,2400,Amsterdam 2025-06-14 - Place: 3 Points: 842.8,UtrechtIndoor 2025-03-15 - Place: 1 Points: 826.0,AmsterdamIndoor 2025-02-23 - Place: 2 Points: 730.8
-Luc Young,16,2368,Groningen 2025-05-03 - Place: 2 Points: 815.85,GroningenIndoor 2025-01-19 - Place: 1 Points: 808.5,UtrechtIndoor 2025-03-15 - Place: 2 Points: 743.4
+Ward Nieboer,13,2440,Groningen 2024-05-04 - Place: 3 Points: 835.52,Enschede 2024-04-06 - Place: 4 Points: 811.44,NK 2024-06-29 - Place: 8 Points: 792.75
+Sam Beard,14,2439,Amsterdam 2025-06-14 - Place: 3 Points: 882.0,UtrechtIndoor 2025-03-15 - Place: 1 Points: 826.0,AmsterdamIndoor 2025-02-23 - Place: 2 Points: 730.8
+Luc Young,15,2368,Groningen 2025-05-03 - Place: 2 Points: 815.85,GroningenIndoor 2025-01-19 - Place: 1 Points: 808.5,UtrechtIndoor 2025-03-15 - Place: 2 Points: 743.4
+Florian Engelsing,16,2336,Amsterdam 2025-06-14 - Place: 3 Points: 882.0,AmsterdamIndoor 2025-02-23 - Place: 2 Points: 730.8,EnschedeIndoor 2024-11-30 - Place: 4 Points: 722.75
 Rens Elbertsen,17,2320,NK 2024-06-29 - Place: 6 Points: 951.3,Amsterdam 2024-06-01 - Place: 4 Points: 735.0,Groningen 2024-02-11 - Place: 6 Points: 633.36
-Florian Engelsing,18,2296,Amsterdam 2025-06-14 - Place: 3 Points: 842.8,AmsterdamIndoor 2025-02-23 - Place: 2 Points: 730.8,EnschedeIndoor 2024-11-30 - Place: 4 Points: 722.75
-Stijn Slebos,19,2263,NK 2024-06-29 - Place: 8 Points: 792.75,Groningen 2024-02-11 - Place: 4 Points: 738.92,Groningen 2024-05-04 - Place: 4 Points: 731.08
-Joep Blanksma,20,2254,NK 2024-06-29 - Place: 4 Points: 1109.85,Enschede 2024-04-06 - Place: 6 Points: 695.52,NK 2023-09-02 - Place: 7 Points: 448.35
+Stijn Slebos,18,2263,NK 2024-06-29 - Place: 8 Points: 792.75,Groningen 2024-02-11 - Place: 4 Points: 738.92,Groningen 2024-05-04 - Place: 4 Points: 731.08
+Joep Blanksma,19,2254,NK 2024-06-29 - Place: 4 Points: 1109.85,Enschede 2024-04-06 - Place: 6 Points: 695.52,NK 2023-09-02 - Place: 7 Points: 448.35
+Jannah Sonnenschein,20,2207,Amsterdam 2025-06-14 - Place: 1 Points: 1102.5,EnschedeIndoor 2024-11-30 - Place: 6 Points: 619.5,GroningenIndoor 2025-01-19 - Place: 5 Points: 485.1
 Simen Bootsma,21,2193,Groningen 2025-05-03 - Place: 2 Points: 815.85,UtrechtIndoor 2025-03-15 - Place: 2 Points: 743.4,NK 2024-06-29 - Place: 12 Points: 634.2
 Tjebbe Treub,22,2188,EnschedeIndoor 2024-11-30 - Place: 3 Points: 826.0,GroningenIndoor 2025-01-19 - Place: 2 Points: 727.65,Groningen 2025-05-03 - Place: 4 Points: 634.55
-Jannah Sonnenschein,23,2158,Amsterdam 2025-06-14 - Place: 1 Points: 1053.5,EnschedeIndoor 2024-11-30 - Place: 6 Points: 619.5,GroningenIndoor 2025-01-19 - Place: 5 Points: 485.1
+Lauri Schippers,23,2142,Amsterdam 2025-06-14 - Place: 1 Points: 1102.5,Groningen 2025-05-03 - Place: 5 Points: 543.9,UtrechtIndoor 2025-03-15 - Place: 5 Points: 495.6
 Thibault Mareschal,24,2097,Amsterdam 2024-06-01 - Place: 1 Points: 1050.0,Amsterdam 2024-01-20 - Place: 6 Points: 624.96,Amsterdam 2023-06-17 - Place: 9 Points: 422.52
-Lauri Schippers,25,2093,Amsterdam 2025-06-14 - Place: 1 Points: 1053.5,Groningen 2025-05-03 - Place: 5 Points: 543.9,UtrechtIndoor 2025-03-15 - Place: 5 Points: 495.6
+Gabriele Brazzo,25,2049,Amsterdam 2025-06-14 - Place: 2 Points: 992.25,NK 2024-06-29 - Place: 11 Points: 634.2,Amsterdam 2023-06-17 - Place: 12 Points: 422.52
 Bart Derks,26,2038,GroningenIndoor 2025-01-19 - Place: 1 Points: 808.5,UtrechtIndoor 2025-03-15 - Place: 3 Points: 660.8,AmsterdamIndoor 2025-02-23 - Place: 4 Points: 568.4
-Gabriele Brazzo,27,2005,Amsterdam 2025-06-14 - Place: 2 Points: 948.15,NK 2024-06-29 - Place: 11 Points: 634.2,Amsterdam 2023-06-17 - Place: 12 Points: 422.52
-Sander Breman,28,1958,Amsterdam 2025-06-14 - Place: 4 Points: 737.45,Groningen 2025-05-03 - Place: 3 Points: 725.2,UtrechtIndoor 2025-03-15 - Place: 5 Points: 495.6
+Sander Breman,27,1993,Amsterdam 2025-06-14 - Place: 4 Points: 771.75,Groningen 2025-05-03 - Place: 3 Points: 725.2,UtrechtIndoor 2025-03-15 - Place: 5 Points: 495.6
+David Teel,28,1973,Amsterdam 2025-06-14 - Place: 4 Points: 771.75,Groningen 2025-05-03 - Place: 3 Points: 725.2,NK 2024-06-29 - Place: 15 Points: 475.65
 Mark de Jong,29,1950,NK 2023-09-02 - Place: 1 Points: 896.7,Amsterdam 2023-06-17 - Place: 7 Points: 528.15,Amsterdam 2024-06-01 - Place: 7 Points: 525.0
-David Teel,30,1938,Amsterdam 2025-06-14 - Place: 4 Points: 737.45,Groningen 2025-05-03 - Place: 3 Points: 725.2,NK 2024-06-29 - Place: 15 Points: 475.65
-Yuan Tjiam,31,1898,NK 2024-06-29 - Place: 10 Points: 634.2,Groningen 2024-02-11 - Place: 5 Points: 633.36,Amsterdam 2024-06-01 - Place: 6 Points: 630.0
-Jari Verbeek,32,1897,Amsterdam 2024-06-01 - Place: 3 Points: 840.0,NK 2024-06-29 - Place: 11 Points: 634.2,Amsterdam 2023-06-17 - Place: 12 Points: 422.52
-Mady Smit,33,1883,Enschede 2025-06-01 - Place: 6 Points: 735.0,Amsterdam 2025-06-14 - Place: 6 Points: 632.1,EnschedeIndoor 2024-11-30 - Place: 7 Points: 516.25
-Niels de Jonge,34,1820,NK 2023-09-02 - Place: 4 Points: 627.69,Groningen 2024-05-04 - Place: 6 Points: 626.64,GroningenIndoor 2025-01-19 - Place: 4 Points: 565.95
-Agnes Berveling,35,1783,Amsterdam 2025-06-14 - Place: 3 Points: 842.8,AmsterdamIndoor 2025-02-23 - Place: 6 Points: 487.2,Groningen 2025-05-03 - Place: 8 Points: 453.25
-Nicolas Manneback,36,1731,NK 2024-06-29 - Place: 10 Points: 634.2,Groningen 2024-02-11 - Place: 5 Points: 633.36,Enschede 2024-04-06 - Place: 9 Points: 463.68
-Sanne Schra,37,1701,Amsterdam 2025-06-14 - Place: 2 Points: 948.15,Groningen 2025-05-03 - Place: 6 Points: 543.9,Groningen 2024-05-04 - Place: 17 Points: 208.88
+Mady Smit,30,1913,Enschede 2025-06-01 - Place: 6 Points: 735.0,Amsterdam 2025-06-14 - Place: 6 Points: 661.5,EnschedeIndoor 2024-11-30 - Place: 7 Points: 516.25
+Jasper Toebes,31,1908,Groningen 2025-05-03 - Place: 1 Points: 906.5,NK 2023-09-02 - Place: 6 Points: 538.02,Enschede 2024-04-06 - Place: 11 Points: 463.68
+Yuan Tjiam,32,1898,NK 2024-06-29 - Place: 10 Points: 634.2,Groningen 2024-02-11 - Place: 5 Points: 633.36,Amsterdam 2024-06-01 - Place: 6 Points: 630.0
+Jari Verbeek,33,1897,Amsterdam 2024-06-01 - Place: 3 Points: 840.0,NK 2024-06-29 - Place: 11 Points: 634.2,Amsterdam 2023-06-17 - Place: 12 Points: 422.52
+Agnes Berveling,34,1822,Amsterdam 2025-06-14 - Place: 3 Points: 882.0,AmsterdamIndoor 2025-02-23 - Place: 6 Points: 487.2,Groningen 2025-05-03 - Place: 8 Points: 453.25
+Niels de Jonge,35,1820,NK 2023-09-02 - Place: 4 Points: 627.69,Groningen 2024-05-04 - Place: 6 Points: 626.64,GroningenIndoor 2025-01-19 - Place: 4 Points: 565.95
+Sanne Schra,36,1745,Amsterdam 2025-06-14 - Place: 2 Points: 992.25,Groningen 2025-05-03 - Place: 6 Points: 543.9,Groningen 2024-05-04 - Place: 17 Points: 208.88
+Nicolas Manneback,37,1731,NK 2024-06-29 - Place: 10 Points: 634.2,Groningen 2024-02-11 - Place: 5 Points: 633.36,Enschede 2024-04-06 - Place: 9 Points: 463.68
 Daniel Peereboom,38,1683,Groningen 2024-05-04 - Place: 6 Points: 626.64,GroningenIndoor 2025-01-19 - Place: 4 Points: 565.95,Enschede 2025-06-01 - Place: 10 Points: 490.0
 Koen Franken,39,1587,GroningenIndoor 2025-01-19 - Place: 3 Points: 646.8,AmsterdamIndoor 2025-02-23 - Place: 6 Points: 487.2,Groningen 2025-05-03 - Place: 8 Points: 453.25
 Eline Meijer,40,1584,NK 2024-06-29 - Place: 7 Points: 792.75,Enschede 2024-04-06 - Place: 8 Points: 579.6,Amsterdam 2023-06-17 - Place: 22 Points: 211.26
-Patrick de Lange,41,1551,NK 2023-09-02 - Place: 3 Points: 717.36,Amsterdam 2023-06-17 - Place: 9 Points: 422.52,Groningen 2023-05-27 - Place: 1 Points: 411.6
-Lars Bouma,42,1539,Amsterdam 2025-06-14 - Place: 7 Points: 526.75,Groningen 2024-05-04 - Place: 8 Points: 522.2,Enschede 2025-06-01 - Place: 10 Points: 490.0
-Sophie Bouma,43,1528,NK 2024-06-29 - Place: 7 Points: 792.75,Groningen 2024-02-11 - Place: 10 Points: 422.24,Groningen 2024-05-04 - Place: 13 Points: 313.32
-Steffen Gastineau,44,1528,EnschedeIndoor 2024-11-30 - Place: 6 Points: 619.5,AmsterdamIndoor 2025-02-23 - Place: 5 Points: 487.2,Amsterdam 2025-06-14 - Place: 12 Points: 421.4
+Lars Bouma,41,1563,Amsterdam 2025-06-14 - Place: 7 Points: 551.25,Groningen 2024-05-04 - Place: 8 Points: 522.2,Enschede 2025-06-01 - Place: 10 Points: 490.0
+Patrick de Lange,42,1551,NK 2023-09-02 - Place: 3 Points: 717.36,Amsterdam 2023-06-17 - Place: 9 Points: 422.52,Groningen 2023-05-27 - Place: 1 Points: 411.6
+Steffen Gastineau,43,1548,EnschedeIndoor 2024-11-30 - Place: 6 Points: 619.5,AmsterdamIndoor 2025-02-23 - Place: 5 Points: 487.2,Amsterdam 2025-06-14 - Place: 12 Points: 441.0
+Sophie Bouma,44,1528,NK 2024-06-29 - Place: 7 Points: 792.75,Groningen 2024-02-11 - Place: 10 Points: 422.24,Groningen 2024-05-04 - Place: 13 Points: 313.32
 Niels Kadijk,45,1515,UtrechtIndoor 2025-03-15 - Place: 3 Points: 660.8,NK 2024-06-29 - Place: 16 Points: 475.65,Enschede 2023-11-26 - Place: 7 Points: 379.05
 Jacob Franssen,46,1499,Groningen 2024-02-11 - Place: 7 Points: 527.8,UtrechtIndoor 2025-03-15 - Place: 6 Points: 495.6,NK 2024-06-29 - Place: 16 Points: 475.65
 Omar el Tambouli,47,1486,UtrechtIndoor 2025-03-15 - Place: 1 Points: 826.0,Enschede 2024-04-06 - Place: 13 Points: 347.76,Amsterdam 2024-01-20 - Place: 16 Points: 312.48
@@ -54,10 +54,10 @@ Adnan Jerbi,52,1320,Groningen 2024-02-11 - Place: 3 Points: 844.48,NK 2024-06-29
 Ludwig Branzk,53,1308,NK 2024-06-29 - Place: 9 Points: 634.2,NK 2023-09-02 - Place: 11 Points: 358.68,Amsterdam 2024-06-01 - Place: 14 Points: 315.0
 Roos van der Wielen,54,1302,AmsterdamIndoor 2025-02-23 - Place: 1 Points: 812.0,Enschede 2025-06-01 - Place: 12 Points: 490.0,
 Maurice Jantjes,55,1299,Amsterdam 2023-06-17 - Place: 3 Points: 845.04,Groningen 2023-05-27 - Place: 2 Points: 370.44,Enschede 2023-04-22 - Place: 14 Points: 84.0
-Ewout van den Pol,56,1291,Enschede 2024-04-06 - Place: 12 Points: 463.68,NK 2023-09-02 - Place: 7 Points: 448.35,Enschede 2023-11-26 - Place: 7 Points: 379.05
-Irian Baert,57,1278,Enschede 2025-06-01 - Place: 4 Points: 857.5,Amsterdam 2024-06-01 - Place: 12 Points: 420.0,
-Toan Pauwels,58,1278,Enschede 2025-06-01 - Place: 4 Points: 857.5,Amsterdam 2024-06-01 - Place: 12 Points: 420.0,
-Annabel Beiner,59,1260,Amsterdam 2025-06-14 - Place: 3 Points: 842.8,Groningen 2024-05-04 - Place: 19 Points: 208.88,Amsterdam 2024-01-20 - Place: 24 Points: 208.32
+Annabel Beiner,56,1299,Amsterdam 2025-06-14 - Place: 3 Points: 882.0,Groningen 2024-05-04 - Place: 19 Points: 208.88,Amsterdam 2024-01-20 - Place: 24 Points: 208.32
+Ewout van den Pol,57,1291,Enschede 2024-04-06 - Place: 12 Points: 463.68,NK 2023-09-02 - Place: 7 Points: 448.35,Enschede 2023-11-26 - Place: 7 Points: 379.05
+Irian Baert,58,1278,Enschede 2025-06-01 - Place: 4 Points: 857.5,Amsterdam 2024-06-01 - Place: 12 Points: 420.0,
+Toan Pauwels,59,1278,Enschede 2025-06-01 - Place: 4 Points: 857.5,Amsterdam 2024-06-01 - Place: 12 Points: 420.0,
 Koen Huits,60,1258,Groningen 2024-02-11 - Place: 8 Points: 527.8,Groningen 2024-05-04 - Place: 12 Points: 417.76,Amsterdam 2024-01-20 - Place: 13 Points: 312.48
 Adriaan van Gerven,61,1237,Amsterdam 2024-01-20 - Place: 5 Points: 624.96,Enschede 2025-06-01 - Place: 8 Points: 612.5,
 Maarten van Beek,62,1236,NK 2024-06-29 - Place: 14 Points: 475.65,NK 2023-09-02 - Place: 8 Points: 448.35,Amsterdam 2024-01-20 - Place: 15 Points: 312.48
@@ -73,31 +73,31 @@ Louis Mareschal,71,1050,Amsterdam 2024-06-01 - Place: 1 Points: 1050.0,,
 Luca Marrer,72,1043,Enschede 2024-04-06 - Place: 2 Points: 1043.28,,
 Cedric Omtzigt,73,1036,Enschede 2024-04-06 - Place: 12 Points: 463.68,Enschede 2023-11-26 - Place: 12 Points: 303.24,NK 2023-09-02 - Place: 15 Points: 269.01
 Frank Buigel,74,1003,Groningen 2024-05-04 - Place: 12 Points: 417.76,Groningen 2024-02-11 - Place: 16 Points: 316.68,NK 2023-09-02 - Place: 14 Points: 269.01
-Shauny Dieltjes,75,985,Enschede 2025-06-01 - Place: 11 Points: 490.0,Groningen 2025-05-03 - Place: 7 Points: 453.25,Enschede 2023-04-22 - Place: 27 Points: 42.0
-Oriol Gonzalez,76,951,Amsterdam 2023-06-17 - Place: 2 Points: 950.67,,
-Tavo Garcia,77,951,Amsterdam 2023-06-17 - Place: 2 Points: 950.67,,
-Jonas Klimt,78,949,NK 2024-06-29 - Place: 9 Points: 634.2,Amsterdam 2024-06-01 - Place: 14 Points: 315.0,
-Alberto Tiribello,79,948,Amsterdam 2025-06-14 - Place: 2 Points: 948.15,,
-Alexandra Pelz,80,948,Amsterdam 2025-06-14 - Place: 2 Points: 948.15,,
+Alberto Tiribello,75,992,Amsterdam 2025-06-14 - Place: 2 Points: 992.25,,
+Alexandra Pelz,76,992,Amsterdam 2025-06-14 - Place: 2 Points: 992.25,,
+Shauny Dieltjes,77,985,Enschede 2025-06-01 - Place: 11 Points: 490.0,Groningen 2025-05-03 - Place: 7 Points: 453.25,Enschede 2023-04-22 - Place: 27 Points: 42.0
+Oriol Gonzalez,78,951,Amsterdam 2023-06-17 - Place: 2 Points: 950.67,,
+Tavo Garcia,79,951,Amsterdam 2023-06-17 - Place: 2 Points: 950.67,,
+Jonas Klimt,80,949,NK 2024-06-29 - Place: 9 Points: 634.2,Amsterdam 2024-06-01 - Place: 14 Points: 315.0,
 Ilonka Thielen,81,946,Groningen 2024-05-04 - Place: 10 Points: 417.76,Groningen 2024-02-11 - Place: 13 Points: 316.68,Amsterdam 2023-06-17 - Place: 20 Points: 211.26
 Gauthier Vandamme,82,945,Amsterdam 2024-06-01 - Place: 2 Points: 945.0,,
 Gilles Hublet,83,945,Amsterdam 2024-06-01 - Place: 2 Points: 945.0,,
 Joeri Vlassaks,84,937,Amsterdam 2024-01-20 - Place: 2 Points: 937.44,,
 Martijn Paes,85,937,Amsterdam 2024-01-20 - Place: 2 Points: 937.44,,
-Jan Schmitz,86,911,Groningen 2025-05-03 - Place: 5 Points: 543.9,Enschede 2025-06-01 - Place: 16 Points: 367.5,
-Stan van der Enden,87,889,Amsterdam 2025-06-14 - Place: 7 Points: 526.75,Groningen 2025-05-03 - Place: 9 Points: 362.6,
-Jessica Borgers,88,866,Amsterdam 2024-01-20 - Place: 6 Points: 624.96,Amsterdam 2023-06-17 - Place: 28 Points: 158.44,Groningen 2023-05-27 - Place: 19 Points: 82.32
-Jorge Donayre,89,845,Amsterdam 2023-06-17 - Place: 3 Points: 845.04,,
-Lise Pieper,90,843,Amsterdam 2025-06-14 - Place: 4 Points: 737.45,Amsterdam 2023-06-17 - Place: 36 Points: 105.63,
-Olivier hui bon Hoa,91,840,Amsterdam 2024-06-01 - Place: 3 Points: 840.0,,
-Lars Jürgensen,92,834,Amsterdam 2025-06-14 - Place: 11 Points: 421.4,UtrechtIndoor 2025-03-15 - Place: 8 Points: 413.0,
+Stan van der Enden,86,914,Amsterdam 2025-06-14 - Place: 7 Points: 551.25,Groningen 2025-05-03 - Place: 9 Points: 362.6,
+Jan Schmitz,87,911,Groningen 2025-05-03 - Place: 5 Points: 543.9,Enschede 2025-06-01 - Place: 16 Points: 367.5,
+Lise Pieper,88,877,Amsterdam 2025-06-14 - Place: 4 Points: 771.75,Amsterdam 2023-06-17 - Place: 36 Points: 105.63,
+Jessica Borgers,89,866,Amsterdam 2024-01-20 - Place: 6 Points: 624.96,Amsterdam 2023-06-17 - Place: 28 Points: 158.44,Groningen 2023-05-27 - Place: 19 Points: 82.32
+Lars Jürgensen,90,854,Amsterdam 2025-06-14 - Place: 11 Points: 441.0,UtrechtIndoor 2025-03-15 - Place: 8 Points: 413.0,
+Jorge Donayre,91,845,Amsterdam 2023-06-17 - Place: 3 Points: 845.04,,
+Olivier hui bon Hoa,92,840,Amsterdam 2024-06-01 - Place: 3 Points: 840.0,,
 Yorik Maatman,93,813,Groningen 2024-02-11 - Place: 10 Points: 422.24,Amsterdam 2023-06-17 - Place: 17 Points: 211.26,NK 2023-09-02 - Place: 17 Points: 179.34
 Pim Jansen,94,776,EnschedeIndoor 2024-11-30 - Place: 12 Points: 413.0,Groningen 2025-05-03 - Place: 10 Points: 362.6,
-Tom Ottenheim,95,741,UtrechtIndoor 2025-03-15 - Place: 6 Points: 495.6,Enschede 2025-06-01 - Place: 18 Points: 245.0,
-Jannes de Meyer,96,739,Amsterdam 2023-06-17 - Place: 4 Points: 739.41,,
-Tuur Demaegdt,97,739,Amsterdam 2023-06-17 - Place: 4 Points: 739.41,,
-Anna Junk,98,738,Amsterdam 2025-06-14 - Place: 6 Points: 632.1,Amsterdam 2023-06-17 - Place: 35 Points: 105.63,
-Marta devesa Cabrera,99,737,Amsterdam 2025-06-14 - Place: 4 Points: 737.45,,
+Marta devesa Cabrera,95,772,Amsterdam 2025-06-14 - Place: 4 Points: 771.75,,
+Anna Junk,96,767,Amsterdam 2025-06-14 - Place: 6 Points: 661.5,Amsterdam 2023-06-17 - Place: 35 Points: 105.63,
+Tom Ottenheim,97,741,UtrechtIndoor 2025-03-15 - Place: 6 Points: 495.6,Enschede 2025-06-01 - Place: 18 Points: 245.0,
+Jannes de Meyer,98,739,Amsterdam 2023-06-17 - Place: 4 Points: 739.41,,
+Tuur Demaegdt,99,739,Amsterdam 2023-06-17 - Place: 4 Points: 739.41,,
 Benjamin Gottwald,100,735,Enschede 2025-06-01 - Place: 5 Points: 735.0,,
 Thomas Ungerer,101,735,Enschede 2025-06-01 - Place: 5 Points: 735.0,,
 Thomas Beck,102,735,Enschede 2025-06-01 - Place: 6 Points: 735.0,,
@@ -107,45 +107,45 @@ Jonas Adriaenssens,105,729,Amsterdam 2024-01-20 - Place: 4 Points: 729.12,,
 Pieter van der Plas,106,676,NK 2023-09-02 - Place: 9 Points: 358.68,NK 2024-06-29 - Place: 18 Points: 317.1,
 Remco Klaasman,107,675,AmsterdamIndoor 2025-02-23 - Place: 8 Points: 406.0,NK 2023-09-02 - Place: 16 Points: 269.01,
 Konradin Müskens,108,662,Enschede 2024-04-06 - Place: 15 Points: 347.76,Amsterdam 2024-01-20 - Place: 18 Points: 208.32,Amsterdam 2023-06-17 - Place: 37 Points: 105.63
-Stijn Bakker,109,655,Amsterdam 2024-06-01 - Place: 9 Points: 420.0,NK 2023-09-02 - Place: 18 Points: 179.34,Enschede 2023-04-22 - Place: 23 Points: 56.0
-Emil Wirsing,110,650,AmsterdamIndoor 2025-02-23 - Place: 3 Points: 649.6,,
-Jeremy Roth,111,632,Amsterdam 2025-06-14 - Place: 5 Points: 632.1,,
-Tanja Henrich,112,632,Amsterdam 2025-06-14 - Place: 5 Points: 632.1,,
-Jesse Weggemans,113,632,Amsterdam 2025-06-14 - Place: 5 Points: 632.1,,
-Pippa Schippers,114,632,Amsterdam 2025-06-14 - Place: 5 Points: 632.1,,
-Laura Verstraete,115,632,Amsterdam 2025-06-14 - Place: 6 Points: 632.1,,
-Ulysse Couturier,116,630,Amsterdam 2024-06-01 - Place: 5 Points: 630.0,,
-Oscar Stolk,117,629,Groningen 2024-02-11 - Place: 14 Points: 316.68,Amsterdam 2024-01-20 - Place: 14 Points: 312.48,
-Dante Vanderveken,118,625,Amsterdam 2024-01-20 - Place: 5 Points: 624.96,,
-Beau Dysserinck,119,613,Enschede 2025-06-01 - Place: 8 Points: 612.5,,
-Sanne Hogesteeger,120,609,Amsterdam 2025-06-14 - Place: 8 Points: 526.75,Groningen 2023-05-27 - Place: 21 Points: 82.32,
+Jeremy Roth,109,661,Amsterdam 2025-06-14 - Place: 5 Points: 661.5,,
+Tanja Henrich,110,661,Amsterdam 2025-06-14 - Place: 5 Points: 661.5,,
+Jesse Weggemans,111,661,Amsterdam 2025-06-14 - Place: 5 Points: 661.5,,
+Pippa Schippers,112,661,Amsterdam 2025-06-14 - Place: 5 Points: 661.5,,
+Laura Verstraete,113,661,Amsterdam 2025-06-14 - Place: 6 Points: 661.5,,
+Stijn Bakker,114,655,Amsterdam 2024-06-01 - Place: 9 Points: 420.0,NK 2023-09-02 - Place: 18 Points: 179.34,Enschede 2023-04-22 - Place: 23 Points: 56.0
+Emil Wirsing,115,650,AmsterdamIndoor 2025-02-23 - Place: 3 Points: 649.6,,
+Sanne Hogesteeger,116,634,Amsterdam 2025-06-14 - Place: 8 Points: 551.25,Groningen 2023-05-27 - Place: 21 Points: 82.32,
+Ulysse Couturier,117,630,Amsterdam 2024-06-01 - Place: 5 Points: 630.0,,
+Oscar Stolk,118,629,Groningen 2024-02-11 - Place: 14 Points: 316.68,Amsterdam 2024-01-20 - Place: 14 Points: 312.48,
+Dante Vanderveken,119,625,Amsterdam 2024-01-20 - Place: 5 Points: 624.96,,
+Beau Dysserinck,120,613,Enschede 2025-06-01 - Place: 8 Points: 612.5,,
 Bart Haddink,121,587,Groningen 2024-02-11 - Place: 11 Points: 422.24,Groningen 2023-05-27 - Place: 10 Points: 164.64,
 Tim van Caubergh,122,582,Groningen 2023-05-27 - Place: 2 Points: 370.44,Amsterdam 2023-06-17 - Place: 21 Points: 211.26,
 Wouter van Tongeren,123,578,UtrechtIndoor 2025-03-15 - Place: 4 Points: 578.2,,
 Maikel Schils,124,578,UtrechtIndoor 2025-03-15 - Place: 4 Points: 578.2,,
 Ben ten Berge,125,570,NK 2023-09-02 - Place: 9 Points: 358.68,Amsterdam 2023-06-17 - Place: 24 Points: 211.26,
-Yannick Onstenk,126,541,Groningen 2024-05-04 - Place: 10 Points: 417.76,Groningen 2023-05-27 - Place: 14 Points: 123.48,
-Tabriz Popatia,127,528,Amsterdam 2023-06-17 - Place: 8 Points: 528.15,,
-Paul Volle,128,528,Amsterdam 2023-06-17 - Place: 8 Points: 528.15,,
-Charlotte glastra van Loon,129,527,Amsterdam 2025-06-14 - Place: 7 Points: 526.75,,
-Melanie Haeusel,130,527,Amsterdam 2025-06-14 - Place: 7 Points: 526.75,,
-Tale Lechtenbörger,131,527,Amsterdam 2025-06-14 - Place: 8 Points: 526.75,,
+Charlotte glastra van Loon,126,551,Amsterdam 2025-06-14 - Place: 7 Points: 551.25,,
+Melanie Haeusel,127,551,Amsterdam 2025-06-14 - Place: 7 Points: 551.25,,
+Tale Lechtenbörger,128,551,Amsterdam 2025-06-14 - Place: 8 Points: 551.25,,
+Yannick Onstenk,129,541,Groningen 2024-05-04 - Place: 10 Points: 417.76,Groningen 2023-05-27 - Place: 14 Points: 123.48,
+Tabriz Popatia,130,528,Amsterdam 2023-06-17 - Place: 8 Points: 528.15,,
+Paul Volle,131,528,Amsterdam 2023-06-17 - Place: 8 Points: 528.15,,
 Quinten van Duin,132,525,Groningen 2024-02-11 - Place: 15 Points: 316.68,Amsterdam 2024-01-20 - Place: 19 Points: 208.32,
 Niels van Weerdenburg,133,525,Groningen 2024-02-11 - Place: 15 Points: 316.68,Amsterdam 2024-01-20 - Place: 22 Points: 208.32,
 Noah Mensch,134,525,Amsterdam 2024-06-01 - Place: 8 Points: 525.0,,
-Hauke Moeschke,135,522,Groningen 2024-05-04 - Place: 7 Points: 522.2,,
-Britt Vankemenade,136,521,Amsterdam 2024-01-20 - Place: 8 Points: 520.8,,
-Marie-alexia Teisseyre,137,521,Amsterdam 2024-01-20 - Place: 8 Points: 520.8,,
-Albert Gracia,138,516,EnschedeIndoor 2024-11-30 - Place: 8 Points: 516.25,,
-Solange schrijnder van Velzen,139,505,Amsterdam 2025-06-14 - Place: 10 Points: 421.4,Enschede 2023-04-22 - Place: 16 Points: 84.0,
+Solange schrijnder van Velzen,135,525,Amsterdam 2025-06-14 - Place: 10 Points: 441.0,Enschede 2023-04-22 - Place: 16 Points: 84.0,
+Hauke Moeschke,136,522,Groningen 2024-05-04 - Place: 7 Points: 522.2,,
+Britt Vankemenade,137,521,Amsterdam 2024-01-20 - Place: 8 Points: 520.8,,
+Marie-alexia Teisseyre,138,521,Amsterdam 2024-01-20 - Place: 8 Points: 520.8,,
+Albert Gracia,139,516,EnschedeIndoor 2024-11-30 - Place: 8 Points: 516.25,,
 Daniel Horn,140,480,NK 2023-09-02 - Place: 13 Points: 269.01,Amsterdam 2023-06-17 - Place: 18 Points: 211.26,
 Bas Cornelissen,141,476,NK 2024-06-29 - Place: 13 Points: 475.65,,
 Daan Beelen,142,476,NK 2024-06-29 - Place: 13 Points: 475.65,,
 Adam Drong,143,454,Enschede 2025-06-01 - Place: 19 Points: 245.0,Groningen 2024-05-04 - Place: 18 Points: 208.88,
 Tom Caniels,144,453,Enschede 2024-04-06 - Place: 15 Points: 347.76,Amsterdam 2023-06-17 - Place: 37 Points: 105.63,
-Adéla Janků,145,422,Groningen 2024-02-11 - Place: 12 Points: 422.24,,
-Benedikt Meylahn,146,421,Amsterdam 2025-06-14 - Place: 11 Points: 421.4,,
-Knut Satrang,147,421,Amsterdam 2025-06-14 - Place: 12 Points: 421.4,,
+Benedikt Meylahn,145,441,Amsterdam 2025-06-14 - Place: 11 Points: 441.0,,
+Knut Satrang,146,441,Amsterdam 2025-06-14 - Place: 12 Points: 441.0,,
+Adéla Janků,147,422,Groningen 2024-02-11 - Place: 12 Points: 422.24,,
 Matthijs G,148,420,Groningen 2024-02-11 - Place: 18 Points: 211.12,Groningen 2024-05-04 - Place: 17 Points: 208.88,
 Tessel van Manen,149,418,Amsterdam 2024-06-01 - Place: 18 Points: 210.0,Amsterdam 2024-01-20 - Place: 20 Points: 208.32,
 Suzanne Slob,150,413,EnschedeIndoor 2024-11-30 - Place: 9 Points: 413.0,,
