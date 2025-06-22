@@ -87,7 +87,7 @@ def find_divisions(driver: webdriver.Chrome) -> dict[str, str]:
 
 
 def select_division(division_name: str) -> str:
-    if "womens" in division_name.lower():
+    if "women" in division_name.lower():
         return "women"
     if "advanced" in division_name.lower():
         return "advanced"
@@ -95,7 +95,7 @@ def select_division(division_name: str) -> str:
         return "intermediate"
     if "beginner" in division_name.lower():
         return "beginner"
-    return "advanced"
+    return "unknown"
 
 
 def create_tournament_data(driver: webdriver.Chrome) -> list[dict[str, str]] | None:
