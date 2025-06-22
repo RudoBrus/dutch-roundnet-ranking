@@ -37,11 +37,11 @@ jobs:
           sudo mkdir -p /etc/apt/sources.list.d
           sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
           sudo apt-get update
-          sudo apt-get -y install google-chrome-stable=138.0.7204.35
+          sudo apt-get -y install google-chrome-stable=137.0.7151.121
 
       - name: Install ChromeDriver
         run: |
-          CHROMEDRIVER_VERSION="138.0.7204.35"
+          CHROMEDRIVER_VERSION="137.0.7151.121"
           echo "Installing ChromeDriver version: $CHROMEDRIVER_VERSION"
           wget -q "https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/$CHROMEDRIVER_VERSION/linux64/chromedriver-linux64.zip"
           unzip chromedriver-linux64.zip
