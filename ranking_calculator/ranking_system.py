@@ -1,7 +1,10 @@
 import copy
 from datetime import datetime
 
-from ranking_calculator.config import PLAYER_MULTIPLIERS
+from ranking_calculator.config import (
+    RANKED_PLAYER_MULTIPLIERS,
+    UNRANKED_PLAYER_MULTIPLIER,
+)
 from ranking_calculator.player import PlayerList, RankedPlayer
 from ranking_calculator.tournament import Tournament
 
@@ -32,21 +35,37 @@ class RankingSystem:
         for tournament in self.tournament_history:
             tournament.update_age_multiplier(calculation_date)
 
-    def calculate_tournament_player_multiplier(self, tournament: Tournament) -> float:
+    def calculate_ranked_player_multiplier_increase(
+        self, tournament: Tournament
+    ) -> float:
         ranked_players = {player.name: player.rank for player in self.ranked_players}
-        multiplier = 1.0
+        multiplier = 0.0
         for result in tournament.tournament_results:
             player_rank = ranked_players.get(result.player_name)
             if player_rank:
-                multiplier += PLAYER_MULTIPLIERS.get(player_rank, 0.0)
+                multiplier += RANKED_PLAYER_MULTIPLIERS.get(player_rank, 0.0)
+        return multiplier
+
+    def calculate_unranked_player_multiplier_increase(
+        self, tournament: Tournament
+    ) -> float:
+        ranked_players = {player.name: player.rank for player in self.ranked_players}
+        multiplier = 0.0
+        for result in tournament.tournament_results:
+            player_rank = ranked_players.get(result.player_name)
+            if player_rank is None:
+                multiplier += UNRANKED_PLAYER_MULTIPLIER.get(result.rank, 0.0)
         return multiplier
 
     def update_ranking_with_tournament(self, tournament: Tournament) -> None:
         # First we update the tournament's age multiplier
         self.update_age_multipliers(tournament.date)
         # Then we calculate the player multiplier for the tournament
-        tournament.player_multiplier = self.calculate_tournament_player_multiplier(
-            tournament
+        tournament.ranked_player_multiplier_increase = (
+            self.calculate_ranked_player_multiplier_increase(tournament)
+        )
+        tournament.unranked_player_multiplier_increase = (
+            self.calculate_unranked_player_multiplier_increase(tournament)
         )
         # Then we update the player's placements with the tournament results
         self.player_list.update_playerlist_from_tournament(tournament)

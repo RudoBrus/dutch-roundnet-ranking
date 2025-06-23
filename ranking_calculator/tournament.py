@@ -17,12 +17,21 @@ class Tournament:
     name: str
     date: datetime
     tournament_results: list[TournamentResult]
-    player_multiplier: float = 1.0
+    ranked_player_multiplier_increase: float = 0.0
+    unranked_player_multiplier_increase: float = 0.0
     age_multiplier: float = 1.0
 
     @property
     def id(self) -> str:
         return f"{self.name}_{self.date.strftime('%Y-%m-%d')}"
+
+    @property
+    def tournament_strength_multiplier(self) -> float:
+        return (
+            1.0
+            + self.ranked_player_multiplier_increase
+            + self.unranked_player_multiplier_increase
+        )
 
     def update_age_multiplier(self, calculation_date: datetime) -> None:
         age_in_months = int((calculation_date - self.date).days / 30.44)
@@ -30,4 +39,4 @@ class Tournament:
 
     def get_points(self, rank: int) -> float:
         base_points = TOURNAMENT_BASE_POINTS.get(rank, 0)
-        return base_points * self.player_multiplier * self.age_multiplier
+        return base_points * self.tournament_strength_multiplier * self.age_multiplier
