@@ -38,12 +38,7 @@ a pull request and updating through there. To do this you will have to:
 
 ### Running the ranking calculator locally
 
-You can update the ranking calculator by opening a pull request and tagging it
-with "update-ranking". Once the pull request is created, GitHub automation will
-generate a commit that updates the ranking. After reviewing the changes, you can
-merge the pull request.
-
-Alternatively, you can run the ranking calculator locally by executing the
+You can run the ranking calculator locally by executing the
 following command:
 
 ```bash
