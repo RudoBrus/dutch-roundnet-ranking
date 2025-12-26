@@ -25,16 +25,16 @@ and which multipliers they currently have.
 
 Updating the ranking can be done without having to do any local setup by creating
 a pull request and updating through there. To do this you will have to:
-- Create a branch, see [here](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-and-deleting-branches-within-your-repository#creating-a-branch)
-- Within your branch, update the [tournaments.csv](./fwango_scraper/tournaments.csv) file. For now, set `already_scraped` to false. 
+- Create a branch from main, see [here](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-and-deleting-branches-within-your-repository#creating-a-branch).
+- Within your branch, update the [tournaments.csv](./fwango_scraper/tournaments.csv) file. For now, set `already_scraped` to false. `results_published` should always be `true`, as we can not scrape the information if the results are not published yet.  
 - Create a pull request, see [here](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request?tool=webui#creating-the-pull-request).
 - In your pull request, add the `update-ranking` label (on the right side of the screen).
 - A GitHub action will now start, which will use the scraper to create a new file in the [tournament data folder](./ranking_calculator/tournament_data).
   Please check this file to see if it's correct and possibly make some manual changes in order for it to be correct.
 - Set the `already_scraped` in the [tournaments.csv](./fwango_scraper/tournaments.csv) to `true`.
   This prevents us from scraping Fwango over and over again and from overwriting your manual changes.
-- If you have done manual changes, add the label again to re-calculate the ranking.
-- Check the ranking to see if you find it logically, and if so, open it up for review.
+- If you have done manual changes, remove the label and then add it again to re-calculate the ranking.
+- Check the ranking to see if you find it logical, and if so, open the pull request for review.
 
 ### Running the ranking calculator locally
 
