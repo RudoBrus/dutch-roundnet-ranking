@@ -88,15 +88,17 @@ def find_divisions(driver: webdriver.Chrome) -> dict[str, str]:
 
 
 def select_division(division_name: str) -> str:
-    if "advanced" in division_name.lower():
+    name = division_name.lower()
+
+    if "advanced" in name or "open" in name:
         return "advanced"
-    if "intermediate" in division_name.lower():
+    if "intermediate" in name:
         return "intermediate"
-    if "beginner" in division_name.lower():
+    if "beginner" in name:
         return "beginner"
-    if "women" in division_name.lower():
+    if "women" in name:
         return "women"
-    if "open" in division_name.lower():
+    if "open" in name:
         return "advanced"
     return "unknown"
 
