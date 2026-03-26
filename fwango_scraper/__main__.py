@@ -6,7 +6,6 @@ from pathlib import Path
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
@@ -86,14 +85,17 @@ def find_divisions(driver: webdriver.Chrome) -> dict[str, str]:
     }
 
 
+
 def select_division(division_name: str) -> str:
-    if "women" in division_name.lower():
+    name = division_name.lower()
+    
+    if "women" in name:
         return "women"
-    if "advanced" in division_name.lower():
+    if "advanced" in name or "open" in name:
         return "advanced"
-    if "intermediate" in division_name.lower():
+    if "intermediate" in name:
         return "intermediate"
-    if "beginner" in division_name.lower():
+    if "beginner" in name:
         return "beginner"
     return "unknown"
 
@@ -138,17 +140,17 @@ def save_tournament_data(
 
 def create_selenium_driver() -> webdriver.Chrome:
     try:
-        service = Service(executable_path="/usr/local/bin/chromedriver")
         options = Options()
-        options.add_argument("--headless")
+        options.add_argument("--headless=new")
         options.add_argument("--no-sandbox")
         options.add_argument("--disable-dev-shm-usage")
         options.add_argument("--disable-gpu")
         options.add_argument("--incognito")
-        driver = webdriver.Chrome(service=service, options=options)
-        driver.implicitly_wait(20)  # Set implicit wait time for elements to load
+        driver = webdriver.Chrome(options=options)
+        driver.implicitly_wait(20) # Set implicit wait time for elements to load
         print("Chrome WebDriver started successfully.")
         return driver
+
     except Exception as e:
         print(f"Error starting WebDriver: {e}")
         raise
