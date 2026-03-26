@@ -97,8 +97,6 @@ def select_division(division_name: str) -> str:
         return "intermediate"
     if "beginner" in name:
         return "beginner"
-    if "open" in name:
-        return "advanced"
     return "unknown"
 
 
