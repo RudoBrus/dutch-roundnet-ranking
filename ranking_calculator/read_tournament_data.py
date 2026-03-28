@@ -74,8 +74,6 @@ def filter_tournaments_by_category(
                 name=tournament.name,
                 date=tournament.date,
                 tournament_results=filtered_results,
-                player_multiplier=tournament.player_multiplier,
-                age_multiplier=tournament.age_multiplier,
             )
             filtered_tournaments.append(filtered_tournament)
     return filtered_tournaments
