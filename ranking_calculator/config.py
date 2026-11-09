@@ -37,14 +37,23 @@ TOURNAMENT_BASE_POINTS = {
 # all players at the tournament.
 # The multiplier is 0.1 for ranks 1-10, 0.06 for ranks 11-20,
 # 0.03 for ranks 21-30, and 0.005 for ranks 31-50.
-PLAYER_MULTIPLIERS = {
+RANKED_PLAYER_MULTIPLIERS = {
     rank: 0.1 if rank <= 10 else 0.06 if rank <= 20 else 0.03 if rank <= 30 else 0.005
     for rank in range(1, 51)
 }
 
+# Sometimes players that are unranked (often international players) join a tournament,
+# and turn out to be very good. These players should increase the tournament multiplier,
+# even though they don't have a rank. Currently, for every unranked player that ends up
+# in the top 3 teams (6 players) we increase the multiplier by 0.1 and for every
+# unranked player that ends up in the top 8 teams (16 players) we increase the multiplier by 0.03.
+UNRANKED_PLAYER_MULTIPLIER = {
+    placement: 0.1 if placement <= 3 else 0.03 for placement in range(1, 9)
+}
+
 # A tournament becomes worth less points the older it is.
 # The multiplier is 1.0 for tournaments up to 12 months old, 0.8 between 12-18 months,
-# 0.6 between 18-24 months, 0.4 between 24-48 months and 0 points afterwards.
+# 0.6 between 18-24 months, 0.4 between 24-48 months and 0 points afterward.
 AGE_MULTIPLIERS = {
     age_in_months: 1.0
     if age_in_months < 12

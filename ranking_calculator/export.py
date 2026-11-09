@@ -19,7 +19,9 @@ def export_tournament_history(
                 "Tournament Name",
                 "Date",
                 "Players",
-                "Player multiplier",
+                "Tournament strength multiplier",
+                "Ranked player multiplier increase",
+                "Unranked player multiplier increase",
                 "Age multiplier",
                 "Multiplier",
             ]
@@ -30,9 +32,15 @@ def export_tournament_history(
                     tournament.name,
                     tournament.date.strftime("%Y-%m-%d"),
                     len(tournament.tournament_results),
-                    round(tournament.player_multiplier, 2),
+                    round(tournament.tournament_strength_multiplier, 2),
+                    round(tournament.ranked_player_multiplier_increase, 2),
+                    round(tournament.unranked_player_multiplier_increase, 2),
                     tournament.age_multiplier,
-                    round(tournament.player_multiplier * tournament.age_multiplier, 2),
+                    round(
+                        tournament.tournament_strength_multiplier
+                        * tournament.age_multiplier,
+                        2,
+                    ),
                 ]
             )
 
