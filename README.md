@@ -1,3 +1,9 @@
+# DISCLAIMER
+As we now use [playerzone](https://playerzone.roundnetnetherlands.com/) and this has it's own ranking system this repo is not maintained anymore. 
+
+<details>
+  <summary>Old readme</summary>
+  
 # Dutch Roundnet Ranking
 
 This repository contains the code to calculate the Dutch roundnet ranking. The
@@ -89,3 +95,5 @@ environment:
   submit a pull request. Ensure your branch is up-to-date with the main branch
   and that you have run the
   [validation script](./scripts/validation_script.bash) before submitting.
+
+</details>
